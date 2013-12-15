@@ -13,9 +13,19 @@ library LinkedList;
 uses
   SysUtils,
   Classes,
+  System,
   TOperativeUnit in 'TOperativeUnit.pas';
 
 {$R *.res}
+
+function dodo(s : ShortString) : Integer; stdcall;
+begin
+  WriteLn(s);
+  Result:=17;
+end;
+
+exports
+  dodo name 'dodo';
 
 begin
 end.
