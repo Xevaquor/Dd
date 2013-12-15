@@ -26,18 +26,18 @@ var
 
 procedure Append(item : TElemType); stdcall;
 var
-  newNode : PElem;
+  newNode : PElemT;
   iter : PElem;
 begin
   if gHead = nil then
   begin
-    //if list is empty, create it
+    //lista jest pusta, utwÛrz jπ
     New(gHead);
     gHead^.Next := nil;
     gHead^.Val := item;
     Exit;
   end;
-  //otherwise, find tail and append new element to it
+  //lista juø istnieje. Znajdü jej koniec i dopisz nowy element
   iter := gHead;
   while(iter^.Next <> nil) do
   begin
@@ -54,7 +54,7 @@ procedure WriteEach; stdcall;
 var
   iter : PElem;
 begin
-  //check if empty
+  //sprawdü czy lista nie jest pusta
   if gHead = nil then
   begin
     writeln('Empty');
