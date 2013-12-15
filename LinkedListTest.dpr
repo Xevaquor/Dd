@@ -6,12 +6,19 @@ uses
   SysUtils,
   TOperativeUnit in 'TOperativeUnit.pas';
 
-function dodo(s :ShortString) : Integer; stdcall
-	external 'LinkedList.dll' name 'dodo';
+procedure Append(item : TElemType); stdcall
+	external 'LinkedList.dll' name 'Append';
+procedure WriteEach; stdcall
+	external 'LinkedList.dll' name 'WriteEach';
 
 var
-	x : Integer;
+	bolek, stokrotka : TOperative;
 begin
-	x := dodo('omg');
-	writeln(x);
+	bolek.FirstName := 'Lech';
+	stokrotka.FirstName := 'Monika';
+	WriteEach;
+	Append(bolek);
+	WriteEach;
+	Append(stokrotka);
+	WriteEach;
 end.
