@@ -3,6 +3,7 @@ unit TOperativeUnit;
 interface
 
 type
+	POperative = ^TOperative;
 	TOperative = record
 		FirstName : ShortString;
 		LastName : ShortString;
