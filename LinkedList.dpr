@@ -130,8 +130,11 @@ begin
   finally
     CloseFile(f);
   end;
+end;
 
-
+function GetHead : PElem; stdcall;
+begin
+  Result := gHead;
 end;
 
 exports 
@@ -139,6 +142,7 @@ exports
   WriteEach name 'WriteEach',
   WriteToFile name 'WriteToFile',
   ReadFromFile name 'ReadFromFile',
+  GetHead name 'GetHead',
   Seed name 'Seed';
 
 begin
