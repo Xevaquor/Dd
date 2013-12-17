@@ -83,11 +83,66 @@ begin
   Append(stokrotka);
 end;
 
+//TODO: check if list is empty 
+
+procedure WriteToFile; stdcall;
+var
+  f : File of TOperative;
+  iter : PElem;
+begin
+  AssignFile(f, 'database.dat');
+  Rewrite(f);
+
+ try
+ begin
+    //go through all entries and save them to file
+    iter := gHead;
+    while iter <> nil do
+    begin
+      Write(f, iter^.Val);
+      iter := iter^.Next;
+    end;
+  end;
+  finally
+    CloseFile(f);
+  end; 
+end;
+
+//TODO: Exception handling ?
+
+procedure ReadFromFile; stdcall;
+var
+  f : File of TOperative;
+  entry : TOperative;
+begin
+  AssignFile(f, 'database.dat');
+  Reset(f);
+
+  try
+  begin
+    while not EOF(f) do
+    begin
+      Read(f, entry);
+      Append(entry);
+    end;
+  end;
+
+  finally
+    CloseFile(f);
+  end;
+
+
+end;
+
 exports 
   Append name 'Append',
   WriteEach name 'WriteEach',
+  WriteToFile name 'WriteToFile',
+  ReadFromFile name 'ReadFromFile',
   Seed name 'Seed';
 
 begin
   gHead := nil;
 end.
+
+
