@@ -1,3 +1,5 @@
 dcc32 LinkedList.dpr
-dcc32 LinkedListTest.dpr
-LinkedListTest
+REM dcc32 LinkedListTest.dpr
+REM LinkedListTest
+dcc32 Bolek.dpr
+Bolek.exe

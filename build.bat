@@ -1,2 +1,3 @@
 dcc32 LinkedList.dpr
-dcc32 LinkedListTest.dpr
+REM dcc32 LinkedListTest.dpr
+dcc32 Bolek.dpr
