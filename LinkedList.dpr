@@ -71,9 +71,22 @@ begin
 
 end;
 
+procedure Seed; stdcall;
+var
+  bolek, stokrotka, michau : TOperative;
+begin
+  bolek.FirstName := 'Lech';
+  stokrotka.FirstName := 'Monika';
+  michau.FirstName := 'Michau';
+  Append(bolek);
+  Append(michau);
+  Append(stokrotka);
+end;
+
 exports 
   Append name 'Append',
-  WriteEach name 'WriteEach';
+  WriteEach name 'WriteEach',
+  Seed name 'Seed';
 
 begin
   gHead := nil;

@@ -10,15 +10,12 @@ procedure Append(item : TElemType); stdcall
 	external 'LinkedList.dll' name 'Append';
 procedure WriteEach; stdcall
 	external 'LinkedList.dll' name 'WriteEach';
+procedure Seed; stdcall
+	external 'LinkedList.dll' name 'Seed';
 
 var
 	bolek, stokrotka : TOperative;
 begin
-	bolek.FirstName := 'Lech';
-	stokrotka.FirstName := 'Monika';
-	WriteEach;
-	Append(bolek);
-	WriteEach;
-	Append(stokrotka);
+	Seed;
 	WriteEach;
 end.
