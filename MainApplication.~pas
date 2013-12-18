@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, TOperativeUnit, ComCtrls;
+  Dialogs, TOperativeUnit, ComCtrls, StdCtrls;
   
 procedure Append(item : TElemType); stdcall
 	external 'LinkedList.dll' name 'Append';
@@ -22,9 +22,23 @@ function GetHead : PElem; stdcall
 type
   TMainForm = class(TForm)
     lvOperatives: TListView;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    edtFirstName: TEdit;
+    edtLastName: TEdit;
+    edtNickName: TEdit;
+    dtpBirthDate: TDateTimePicker;
+    edtBirthPlace: TEdit;
+    Label5: TLabel;
+    btnAddOperative: TButton;
     procedure FormCreate(Sender: TObject);
+    procedure btnAddOperativeClick(Sender: TObject);
   private
     procedure FillListBox;
+    function ValidateAdd : Bool;
   public
     { Public declarations }
   end;
@@ -35,6 +49,14 @@ var
 implementation
 
 {$R *.dfm}
+
+function TMainForm.ValidateAdd : Bool;
+begin
+  Result := (Length(edtFirstName.Text) > 0) and
+            (Length(edtLastName.Text) > 0) and
+            (Length(edtNickName.Text) > 0) and
+            (Length(edtBirthPlace.Text) > 0);
+end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
@@ -55,11 +77,33 @@ begin
     item := lvOperatives.Items.Add;
     item.Caption := iter^.Val.FirstName;
     item.SubItems.Add(iter^.Val.LastName);
+    item.SubItems.Add(iter^.Val.NickName);
     item.SubItems.Add(DateToStr(iter^.Val.DateOfBirth));
     item.SubItems.Add(iter^.Val.BirthPlace);
 
     iter := iter^.Next;
   end;
+
+end;
+
+procedure TMainForm.btnAddOperativeClick(Sender: TObject);
+var
+  row : TOperative;
+begin
+  if not ValidateAdd then
+  begin
+    ShowMessage('Podane dane są nieprawidłowe');
+    Exit;
+  end;
+  row.FirstName := edtFirstName.Text;
+  row.LastName := edtLastName.Text;
+  row.NickName := edtNickName.Text;
+  row.DateOfBirth := dtpBirthDate.Date;
+  row.BirthPlace := edtBirthPlace.Text;
+
+  Append(row);
+  WriteToFile;
+  FillListBox;
 
 end;
 
