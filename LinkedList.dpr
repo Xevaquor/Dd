@@ -143,12 +143,22 @@ begin
   Result := gHead;
 end;
 
+function EqualTOperatives(a, b : TOperative) : Boolean; stdcall;
+begin
+  Result := (a.FirstName = b.FirstName) and
+            (a.LastName = b.LastName) and
+            (a.NickName = b.NickName) and
+            (a.DateOfBirth = b.DateOfBirth) and
+            (a.BirthPlace = b.BirthPlace);
+end;
+
 exports 
   Append name 'Append',
   WriteEach name 'WriteEach',
   WriteToFile name 'WriteToFile',
   ReadFromFile name 'ReadFromFile',
   GetHead name 'GetHead',
+  EqualTOperatives name 'EqualTOperatives',
   Seed name 'Seed';
 
 begin
