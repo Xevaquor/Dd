@@ -76,8 +76,14 @@ var
   bolek, stokrotka, michau : TOperative;
 begin
   bolek.FirstName := 'Lech';
+  bolek.NickName := 'Bolek';
+  bolek.DateOfBirth := Now;
   stokrotka.FirstName := 'Monika';
-  michau.FirstName := 'Michau';
+  stokrotka.NickName := 'Stokrotka';
+  stokrotka.DateOfBirth := Now;
+  michau.FirstName := 'Michal';
+  michau.NickName := 'Michau';  
+  michau.DateOfBirth := Now;
   Append(bolek);
   Append(michau);
   Append(stokrotka);

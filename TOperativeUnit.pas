@@ -7,6 +7,7 @@ type
 	TOperative = record
 		FirstName : ShortString;
 		LastName : ShortString;
+		NickName : ShortString;
 		DateOfBirth : TDateTime;
 		BirthPlace : ShortString;
 		ImagePath : ShortString;

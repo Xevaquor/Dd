@@ -21,7 +21,7 @@ var
 	bolek, stokrotka : TOperative;
 begin
 	WriteEach;
-	ReadFromFile;
+	//ReadFromFile;
 	WriteEach;
 	Seed;
 	WriteEach;
