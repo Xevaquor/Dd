@@ -14,6 +14,8 @@ uses
   SysUtils,
   Classes,
   System,
+  DateUtils,
+  Math,
   TOperativeUnit in 'TOperativeUnit.pas';
 
 {$R *.res}
@@ -148,8 +150,29 @@ begin
   Result := (a.FirstName = b.FirstName) and
             (a.LastName = b.LastName) and
             (a.NickName = b.NickName) and
-            (a.DateOfBirth = b.DateOfBirth) and
+            (floor(a.DateOfBirth) = floor(b.DateOfBirth)) and
             (a.BirthPlace = b.BirthPlace);
+end;
+
+procedure Remove(op : TOperative); stdcall;
+var
+  iter, prev : PElem;
+begin
+  iter := gHead;
+  while iter <> nil do
+  begin
+    if EqualTOperatives(iter^.Val, op) then
+      begin
+        //TODO: Skrajne przypadki
+        //TODO: Memleak
+
+        prev^.Next := iter^.Next;
+        Exit;
+      end;
+    prev := iter;
+    iter := iter^.Next;
+  end;
+
 end;
 
 exports 
@@ -159,6 +182,7 @@ exports
   ReadFromFile name 'ReadFromFile',
   GetHead name 'GetHead',
   EqualTOperatives name 'EqualTOperatives',
+  Remove name 'Remove',
   Seed name 'Seed';
 
 begin

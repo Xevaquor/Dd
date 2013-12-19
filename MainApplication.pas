@@ -20,6 +20,8 @@ function GetHead : PElem; stdcall
   external 'LinkedList.dll' name 'GetHead';
 function EqualTOperatives : PElem; stdcall
   external 'LinkedList.dll' name 'EqualTOperatives';
+procedure Remove(op : TOperative); stdcall
+  external 'LinkedList.dll' name 'Remove';
 
 type
   TMainForm = class(TForm)
@@ -36,11 +38,14 @@ type
     edtBirthPlace: TEdit;
     Label5: TLabel;
     btnAddOperative: TButton;
+    btnDelete: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
   private
     procedure FillListBox;
     function ValidateAdd : Bool;
+    function OperativeFromSelected : TOperative;
   public
     { Public declarations }
   end;
@@ -107,6 +112,39 @@ begin
   WriteToFile;
   FillListBox;
 
+end;
+
+function TMainForm.OperativeFromSelected : TOperative;
+var
+  op : TOperative;
+  i : Integer;
+begin
+  for i := 0 to lvOperatives.Items.Count - 1 do
+  begin
+    if lvOperatives.Items[i].Selected then //DAFUQ
+      begin
+        op.FirstName := lvOperatives.Items[i].Caption;
+        op.LastName := lvOperatives.Items[i].SubItems[0];
+        op.NickName := lvOperatives.Items[i].SubItems[1];
+        op.DateOfBirth := StrToDate(lvOperatives.Items[i].SubItems[2]);
+        op.BirthPlace := lvOperatives.Items[i].SubItems[3];
+        Result := op;
+        Exit;
+      end;
+  end;
+end;
+
+procedure TMainForm.btnDeleteClick(Sender: TObject);
+var
+  op : TOperative;
+begin
+  if lvOperatives.Selected <> nil then
+  begin
+    op := OperativeFromSelected;
+    Remove(op);
+    WriteToFile;
+    FillListBox;
+  end;
 end;
 
 end.

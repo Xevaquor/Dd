@@ -18,6 +18,8 @@ procedure ReadFromFile; stdcall
   external 'LinkedList.dll' name 'ReadFromFile';
 function GetHead : PElem; stdcall
   external 'LinkedList.dll' name 'GetHead';
+function EqualTOperatives : PElem; stdcall
+  external 'LinkedList.dll' name 'EqualTOperatives';
 
 type
   TMainForm = class(TForm)

@@ -14,6 +14,8 @@ uses
   SysUtils,
   Classes,
   System,
+  DateUtils,
+  Math,
   TOperativeUnit in 'TOperativeUnit.pas';
 
 {$R *.res}
@@ -26,18 +28,18 @@ var
 
 procedure Append(item : TElemType); stdcall;
 var
-  newNode : PElemT;
+  newNode : PElem;
   iter : PElem;
 begin
   if gHead = nil then
   begin
-    //lista jest pusta, utwÛrz jπ
+    //if list is empty, create it
     New(gHead);
     gHead^.Next := nil;
     gHead^.Val := item;
     Exit;
   end;
-  //lista juø istnieje. Znajdü jej koniec i dopisz nowy element
+  //otherwise, find tail and append new element to it
   iter := gHead;
   while(iter^.Next <> nil) do
   begin
@@ -54,7 +56,7 @@ procedure WriteEach; stdcall;
 var
   iter : PElem;
 begin
-  //sprawdü czy lista nie jest pusta
+  //check if empty
   if gHead = nil then
   begin
     writeln('Empty');
@@ -71,10 +73,120 @@ begin
 
 end;
 
+procedure Seed; stdcall;
+var
+  bolek, stokrotka, michau : TOperative;
+begin
+  bolek.FirstName := 'Lech';
+  bolek.NickName := 'Bolek';
+  bolek.DateOfBirth := Now;
+  stokrotka.FirstName := 'Monika';
+  stokrotka.NickName := 'Stokrotka';
+  stokrotka.DateOfBirth := Now;
+  michau.FirstName := 'Michal';
+  michau.NickName := 'Michau';  
+  michau.DateOfBirth := Now;
+  Append(bolek);
+  Append(michau);
+  Append(stokrotka);
+end;
+
+//TODO: check if list is empty 
+
+procedure WriteToFile; stdcall;
+var
+  f : File of TOperative;
+  iter : PElem;
+begin
+  AssignFile(f, 'database.dat');
+  Rewrite(f);
+
+ try
+ begin
+    //go through all entries and save them to file
+    iter := gHead;
+    while iter <> nil do
+    begin
+      Write(f, iter^.Val);
+      iter := iter^.Next;
+    end;
+  end;
+  finally
+    CloseFile(f);
+  end; 
+end;
+
+//TODO: Exception handling ?
+
+procedure ReadFromFile; stdcall;
+var
+  f : File of TOperative;
+  entry : TOperative;
+begin
+  AssignFile(f, 'database.dat');
+  Reset(f);
+
+  try
+  begin
+    while not EOF(f) do
+    begin
+      Read(f, entry);
+      Append(entry);
+    end;
+  end;
+
+  finally
+    CloseFile(f);
+  end;
+end;
+
+function GetHead : PElem; stdcall;
+begin
+  Result := gHead;
+end;
+
+function EqualTOperatives(a, b : TOperative) : Boolean; stdcall;
+begin
+  Result := (a.FirstName = b.FirstName) and
+            (a.LastName = b.LastName) and
+            (a.NickName = b.NickName) and
+            (floor(a.DateOfBirth) = floor.DateOfBirth)) and
+            (a.BirthPlace = b.BirthPlace);
+end;
+
+procedure Remove(op : TOperative); stdcall;
+var
+  iter, prev : PElem;
+begin
+  iter := gHead;
+  while iter <> nil do
+  begin
+    if EqualTOperatives(iter^.Val, op) then
+      begin
+        //TODO: Skrajne przypadki
+        //TODO: Memleak
+
+        prev^.Next := iter^.Next;
+        Exit;
+      end;
+    prev := iter;
+    iter := iter^.Next;
+  end;
+
+end;
+
 exports 
   Append name 'Append',
-  WriteEach name 'WriteEach';
+  WriteEach name 'WriteEach',
+  WriteToFile name 'WriteToFile',
+  ReadFromFile name 'ReadFromFile',
+  GetHead name 'GetHead',
+  EqualTOperatives name 'EqualTOperatives',
+  Remove name 'Remove',
+  Seed name 'Seed';
 
 begin
   gHead := nil;
 end.
+
+

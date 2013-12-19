@@ -132,4 +132,13 @@ object MainForm: TMainForm
       OnClick = btnAddOperativeClick
     end
   end
+  object btnDelete: TButton
+    Left = 688
+    Top = 208
+    Width = 75
+    Height = 25
+    Caption = 'Usu'#324
+    TabOrder = 2
+    OnClick = btnDeleteClick
+  end
 end
