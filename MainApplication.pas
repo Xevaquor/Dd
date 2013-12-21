@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils;
+  Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils, FormAdd;
   
 procedure Append(item : TElemType); stdcall
 	external 'LinkedList.dll' name 'Append';
@@ -37,8 +37,8 @@ type
     dtpBirthDate: TDateTimePicker;
     edtBirthPlace: TEdit;
     Label5: TLabel;
-    btnAddOperative: TButton;
     btnDelete: TButton;
+    btnAddOperative: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
@@ -146,18 +146,9 @@ procedure TMainForm.btnAddOperativeClick(Sender: TObject);
 var
   row : TOperative;
 begin
-  if not ValidateAdd then
-  begin
-    ShowMessage('Podane dane są nieprawidłowe');
-    Exit;
-  end;
-  row.FirstName := edtFirstName.Text;
-  row.LastName := edtLastName.Text;
-  row.NickName := edtNickName.Text;
-  row.DateOfBirth := dtpBirthDate.Date;
-  row.BirthPlace := edtBirthPlace.Text;
+     FormAdd.Form1.ShowModal;
 
-  Append(row);
+
   WriteToFile;
   FillListBox;
 
@@ -186,13 +177,18 @@ end;
 procedure TMainForm.btnDeleteClick(Sender: TObject);
 var
   op : TOperative;
+  dlgResult : Integer;
 begin
   if lvOperatives.Selected <> nil then
   begin
-    op := OperativeFromSelected;
-    Remove(op);
-    WriteToFile;
-    FillListBox;
+    dlgResult := MessageDlg('Na pewno usunąć?', mtConfirmation, mbYesNo, 0);
+    if dlgResult = mrYes then
+    begin
+      op := OperativeFromSelected;
+      Remove(op);
+      WriteToFile;
+      FillListBox;
+    end;
   end;
 end;
 

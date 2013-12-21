@@ -125,15 +125,6 @@ object MainForm: TMainForm
       Height = 21
       TabOrder = 4
     end
-    object btnAddOperative: TButton
-      Left = 488
-      Top = 104
-      Width = 75
-      Height = 25
-      Caption = 'Dodaj'
-      TabOrder = 5
-      OnClick = btnAddOperativeClick
-    end
   end
   object btnDelete: TButton
     Left = 688
@@ -143,5 +134,14 @@ object MainForm: TMainForm
     Caption = 'Usu'#324
     TabOrder = 2
     OnClick = btnDeleteClick
+  end
+  object btnAddOperative: TButton
+    Left = 687
+    Top = 261
+    Width = 75
+    Height = 25
+    Caption = 'Dodaj'
+    TabOrder = 3
+    OnClick = btnAddOperativeClick
   end
 end
