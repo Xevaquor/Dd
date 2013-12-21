@@ -163,10 +163,16 @@ begin
   begin
     if EqualTOperatives(iter^.Val, op) then
       begin
-        //TODO: Skrajne przypadki
+        //TODO: Skrajne przypadki 
         //TODO: Memleak
-
+        if iter = gHead then
+        begin
+          gHead := iter^.Next;
+          dispose(iter);
+          Exit;
+        end;  
         prev^.Next := iter^.Next;
+        Dispose(iter);
         Exit;
       end;
     prev := iter;
