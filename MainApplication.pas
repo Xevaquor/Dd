@@ -1,10 +1,10 @@
-unit MainApplication;
+﻿unit MainApplication;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, TOperativeUnit, ComCtrls, StdCtrls;
+  Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils;
   
 procedure Append(item : TElemType); stdcall
 	external 'LinkedList.dll' name 'Append';
@@ -42,7 +42,12 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
+    procedure lvOperativesColumnClick(Sender: TObject; Column: TListColumn);
+    procedure lvOperativesCompare(Sender: TObject; Item1, Item2: TListItem;
+      Data: Integer; var Compare: Integer);
   private
+    SortDescending : Bool;
+    SortColumn : Integer;
     procedure FillListBox;
     function ValidateAdd : Bool;
     function OperativeFromSelected : TOperative;
@@ -69,6 +74,50 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   ReadFromFile;
   FillListBox;
+end;
+
+procedure TMainForm.lvOperativesColumnClick(Sender: TObject;
+  Column: TListColumn);
+begin
+     TListView(sender).SortType := stData;
+     if Column.Index <> SortColumn then
+     begin
+       SortColumn := Column.Index;
+       SortDescending := False;
+     end
+     else
+     begin
+       SortDescending := not SortDescending;
+       TListView(sender).SortType := stData;
+     end;
+
+       lvOperatives.AlphaSort;
+
+end;
+
+procedure TMainForm.lvOperativesCompare(Sender: TObject; Item1,
+  Item2: TListItem; Data: Integer; var Compare: Integer);
+begin
+     if SortColumn = 0 then
+     begin
+        Compare := CompareText(Item1.Caption, Item2.Caption)
+     end
+     else if SortColumn = 3 then
+     begin
+          Compare := CompareDate(
+          StrToDate(Item1.SubItems[2]),
+          StrToDate(Item2.SubItems[2]));
+
+     end
+     else
+     begin
+         Compare := CompareText(Item1.SubItems[SortColumn-1],
+         Item2.SubItems[SortColumn-1]);
+     end;
+
+     if SortDescending then
+        Compare := -Compare;
+
 end;
 
 procedure TMainForm.FillListBox;

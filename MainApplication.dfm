@@ -1,9 +1,9 @@
 object MainForm: TMainForm
-  Left = 309
-  Top = 320
-  Width = 1305
-  Height = 675
+  Left = 343
+  Top = 309
   Caption = 'MainForm'
+  ClientHeight = 636
+  ClientWidth = 1289
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object MainForm: TMainForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesigned
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -42,6 +43,8 @@ object MainForm: TMainForm
     RowSelect = True
     TabOrder = 0
     ViewStyle = vsReport
+    OnColumnClick = lvOperativesColumnClick
+    OnCompare = lvOperativesCompare
   end
   object GroupBox1: TGroupBox
     Left = 32
