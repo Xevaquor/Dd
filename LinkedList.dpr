@@ -13,9 +13,9 @@ library LinkedList;
 uses
   SysUtils,
   Classes,
-  System,
   DateUtils,
   Math,
+  Types,
   TOperativeUnit in 'TOperativeUnit.pas';
 
 {$R *.res}
@@ -150,7 +150,7 @@ begin
   Result := (a.FirstName = b.FirstName) and
             (a.LastName = b.LastName) and
             (a.NickName = b.NickName) and
-            (floor(a.DateOfBirth) = floor(b.DateOfBirth)) and
+            (CompareDate(a.DateOfBirth, b.DateOfBirth) = EqualsValue) and
             (a.BirthPlace = b.BirthPlace);
 end;
 
