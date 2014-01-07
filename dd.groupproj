@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{D1138782-2CBF-47A2-A440-04821F53B5A0}</ProjectGuid>
+        <ProjectGuid>{A4B20B63-7F85-4912-A7B0-D9944B3BB247}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="LinkedList.dproj">

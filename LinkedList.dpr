@@ -154,6 +154,23 @@ begin
             (a.BirthPlace = b.BirthPlace);
 end;
 
+procedure UpdateOperative(old, new : TOperative); stdcall;
+var
+   iter : PElem;
+begin
+     iter := gHead;
+     while iter <> nil do
+     begin
+          if EqualTOperatives(old, iter^.Val) then
+          begin
+               iter^.Val := new;            
+               Exit;
+          end;
+       iter := iter^.Next;
+     end;
+     
+end;
+
 procedure Remove(op : TOperative); stdcall;
 var
   iter, prev : PElem;
@@ -189,7 +206,8 @@ exports
   GetHead name 'GetHead',
   EqualTOperatives name 'EqualTOperatives',
   Remove name 'Remove',
-  Seed name 'Seed';
+  Seed name 'Seed',
+  UpdateOperative name 'UpdateOperative';
 
 begin
   gHead := nil;
