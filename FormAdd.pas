@@ -34,7 +34,7 @@ type
   private
     function ValidateForm : Boolean;
   public
-    { Public declarations }
+    HasAdded : Bool;
   end;
 
 var
@@ -98,11 +98,14 @@ begin
        edtNickName.Text := '';
        edtPlaceOfBirth.Text := '';
        edtFirstName.SetFocus;
+
+       HasAdded := true;
      end;
 end;
 
 procedure TForm1.btnCloseClick(Sender: TObject);
 begin
+     HasAdded:= False;
      Close;
 end;
 

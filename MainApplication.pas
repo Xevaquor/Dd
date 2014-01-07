@@ -31,6 +31,7 @@ type
     btnDelete: TButton;
     btnAddOperative: TButton;
     btnEdit: TButton;
+    btnSave: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
@@ -40,9 +41,12 @@ type
     procedure lvOperativesSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure btnEditClick(Sender: TObject);
+    procedure btnSaveClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     SortDescending : Bool;
     SortColumn : Integer;
+    PendingChanges : Bool;
     procedure FillListBox;
     function OperativeFromSelected : TOperative;
   public
@@ -56,10 +60,38 @@ implementation
 
 {$R *.dfm}
 
+procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+   dialogResult : Integer;
+begin
+     if PendingChanges = True then
+     begin
+          dialogResult := MessageDlg('Zapisać zmiany?', mtConfirmation, mbYesNoCancel, 0);
+          if dialogResult = mrYes then
+          begin
+            WriteToFile;
+            CanClose := True;
+          end;
+          if dialogResult = mrNo then
+               begin
+                 CanClose := True;
+               end;
+          if dialogResult = mrCancel then
+          begin
+            CanClose := False;
+          end;
+
+
+
+
+     end;
+end;
+
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   ReadFromFile;
   FillListBox;
+  PendingChanges := False;
 end;
 
 procedure TMainForm.lvOperativesColumnClick(Sender: TObject;
@@ -141,10 +173,12 @@ var
   row : TOperative;
 begin
      FormAdd.Form1.ShowModal;
-
-
-  WriteToFile;
   FillListBox;
+  if FormAdd.Form1.HasAdded then
+  begin
+       PendingChanges := True;
+  end;
+
 
 end;
 
@@ -181,6 +215,7 @@ begin
       op := OperativeFromSelected;
       Remove(op);
       FillListBox;
+      PendingChanges := True;
     end;
   end;
 end;
@@ -197,15 +232,22 @@ begin
      FormEdit.Form2.dtpBirthDate.Date := old.DateOfBirth;
      FormEdit.Form2.edtPlaceOfBirth.Text := old.BirthPlace;
 
-     
+
      FormEdit.Form2.ShowModal;
 
      if FormEdit.Form2.OperativeBeingEdited <> nil then
      begin
          UpdateOperative(old, row);
+         PendingChanges := True;
      end;
 
      FillListBox;
+end;
+
+procedure TMainForm.btnSaveClick(Sender: TObject);
+begin
+     WriteToFile;
+     ShowMessage('Zapisano');
 end;
 
 end.

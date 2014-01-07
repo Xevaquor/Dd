@@ -12,6 +12,7 @@ object MainForm: TMainForm
   Font.Style = []
   OldCreateOrder = False
   Position = poDesigned
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -75,5 +76,14 @@ object MainForm: TMainForm
     Enabled = False
     TabOrder = 3
     OnClick = btnEditClick
+  end
+  object btnSave: TButton
+    Left = 687
+    Top = 512
+    Width = 75
+    Height = 25
+    Caption = 'Zapisz'
+    TabOrder = 4
+    OnClick = btnSaveClick
   end
 end
