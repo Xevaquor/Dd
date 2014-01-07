@@ -45,86 +45,7 @@ object MainForm: TMainForm
     ViewStyle = vsReport
     OnColumnClick = lvOperativesColumnClick
     OnCompare = lvOperativesCompare
-  end
-  object GroupBox1: TGroupBox
-    Left = 32
-    Top = 16
-    Width = 577
-    Height = 137
-    Caption = 'Dodaj'
-    TabOrder = 1
-    object Label1: TLabel
-      Left = 16
-      Top = 32
-      Width = 19
-      Height = 13
-      Caption = 'Imi'#281
-    end
-    object Label2: TLabel
-      Left = 16
-      Top = 64
-      Width = 46
-      Height = 13
-      Caption = 'Nazwisko'
-    end
-    object Label3: TLabel
-      Left = 8
-      Top = 96
-      Width = 52
-      Height = 13
-      Caption = 'Pseudonim'
-    end
-    object Label4: TLabel
-      Left = 208
-      Top = 40
-      Width = 72
-      Height = 13
-      Caption = 'Data urodzenia'
-    end
-    object Label5: TLabel
-      Left = 208
-      Top = 72
-      Width = 85
-      Height = 13
-      Caption = 'Miejsce urodzenia'
-    end
-    object edtFirstName: TEdit
-      Left = 72
-      Top = 32
-      Width = 121
-      Height = 21
-      TabOrder = 0
-    end
-    object edtLastName: TEdit
-      Left = 72
-      Top = 64
-      Width = 121
-      Height = 21
-      TabOrder = 1
-    end
-    object edtNickName: TEdit
-      Left = 72
-      Top = 96
-      Width = 121
-      Height = 21
-      TabOrder = 2
-    end
-    object dtpBirthDate: TDateTimePicker
-      Left = 328
-      Top = 32
-      Width = 186
-      Height = 21
-      Date = 41626.035275254630000000
-      Time = 41626.035275254630000000
-      TabOrder = 3
-    end
-    object edtBirthPlace: TEdit
-      Left = 328
-      Top = 64
-      Width = 121
-      Height = 21
-      TabOrder = 4
-    end
+    OnSelectItem = lvOperativesSelectItem
   end
   object btnDelete: TButton
     Left = 688
@@ -132,7 +53,8 @@ object MainForm: TMainForm
     Width = 75
     Height = 25
     Caption = 'Usu'#324
-    TabOrder = 2
+    Enabled = False
+    TabOrder = 1
     OnClick = btnDeleteClick
   end
   object btnAddOperative: TButton
@@ -141,7 +63,17 @@ object MainForm: TMainForm
     Width = 75
     Height = 25
     Caption = 'Dodaj'
-    TabOrder = 3
+    TabOrder = 2
     OnClick = btnAddOperativeClick
+  end
+  object btnEdit: TButton
+    Left = 687
+    Top = 304
+    Width = 75
+    Height = 25
+    Caption = 'Edytuj'
+    Enabled = False
+    TabOrder = 3
+    OnClick = btnEditClick
   end
 end
