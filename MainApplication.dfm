@@ -1,9 +1,9 @@
 object MainForm: TMainForm
   Left = 343
   Top = 309
-  Caption = 'MainForm'
-  ClientHeight = 636
-  ClientWidth = 1289
+  Caption = 'Bolek'
+  ClientHeight = 369
+  ClientWidth = 764
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,13 +14,17 @@ object MainForm: TMainForm
   Position = poDesigned
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  DesignSize = (
+    764
+    369)
   PixelsPerInch = 96
   TextHeight = 13
   object lvOperatives: TListView
-    Left = 32
-    Top = 184
-    Width = 649
+    Left = 8
+    Top = 8
+    Width = 666
     Height = 353
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
         AutoSize = True
@@ -41,6 +45,7 @@ object MainForm: TMainForm
       item
         Caption = 'Miejsce urodzenia'
       end>
+    ReadOnly = True
     RowSelect = True
     TabOrder = 0
     ViewStyle = vsReport
@@ -49,39 +54,44 @@ object MainForm: TMainForm
     OnSelectItem = lvOperativesSelectItem
   end
   object btnDelete: TButton
-    Left = 688
-    Top = 208
+    Left = 681
+    Top = 96
     Width = 75
     Height = 25
+    Anchors = [akTop, akRight]
     Caption = 'Usu'#324
     Enabled = False
     TabOrder = 1
     OnClick = btnDeleteClick
   end
   object btnAddOperative: TButton
-    Left = 687
-    Top = 261
+    Left = 681
+    Top = 8
     Width = 75
     Height = 25
+    Anchors = [akTop, akRight]
     Caption = 'Dodaj'
     TabOrder = 2
     OnClick = btnAddOperativeClick
+    ExplicitLeft = 680
   end
   object btnEdit: TButton
-    Left = 687
-    Top = 304
+    Left = 681
+    Top = 39
     Width = 75
     Height = 25
+    Anchors = [akTop, akRight]
     Caption = 'Edytuj'
     Enabled = False
     TabOrder = 3
     OnClick = btnEditClick
   end
   object btnSave: TButton
-    Left = 687
-    Top = 512
+    Left = 681
+    Top = 336
     Width = 75
     Height = 25
+    Anchors = [akRight, akBottom]
     Caption = 'Zapisz'
     TabOrder = 4
     OnClick = btnSaveClick

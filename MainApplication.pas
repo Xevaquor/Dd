@@ -80,10 +80,6 @@ begin
           begin
             CanClose := False;
           end;
-
-
-
-
      end;
 end;
 
