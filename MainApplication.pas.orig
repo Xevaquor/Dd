@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils, FormAdd;
+  Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils, FormAdd, FormEdit;
   
 procedure Append(item : TElemType); stdcall
 	external 'LinkedList.dll' name 'Append';
@@ -22,34 +22,28 @@ function EqualTOperatives : PElem; stdcall
   external 'LinkedList.dll' name 'EqualTOperatives';
 procedure Remove(op : TOperative); stdcall
   external 'LinkedList.dll' name 'Remove';
+procedure UpdateOperative(a, b : TOperative); stdcall;
+  external 'LinkedList.dll' name 'UpdateOperative';
 
 type
   TMainForm = class(TForm)
     lvOperatives: TListView;
-    GroupBox1: TGroupBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    edtFirstName: TEdit;
-    edtLastName: TEdit;
-    edtNickName: TEdit;
-    dtpBirthDate: TDateTimePicker;
-    edtBirthPlace: TEdit;
-    Label5: TLabel;
     btnDelete: TButton;
     btnAddOperative: TButton;
+    btnEdit: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
     procedure lvOperativesColumnClick(Sender: TObject; Column: TListColumn);
     procedure lvOperativesCompare(Sender: TObject; Item1, Item2: TListItem;
       Data: Integer; var Compare: Integer);
+    procedure lvOperativesSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
+    procedure btnEditClick(Sender: TObject);
   private
     SortDescending : Bool;
     SortColumn : Integer;
     procedure FillListBox;
-    function ValidateAdd : Bool;
     function OperativeFromSelected : TOperative;
   public
     { Public declarations }
@@ -61,14 +55,6 @@ var
 implementation
 
 {$R *.dfm}
-
-function TMainForm.ValidateAdd : Bool;
-begin
-  Result := (Length(edtFirstName.Text) > 0) and
-            (Length(edtLastName.Text) > 0) and
-            (Length(edtNickName.Text) > 0) and
-            (Length(edtBirthPlace.Text) > 0);
-end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
@@ -117,6 +103,14 @@ begin
 
      if SortDescending then
         Compare := -Compare;
+
+end;
+
+procedure TMainForm.lvOperativesSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
+begin
+     btnEdit.Enabled := Selected;
+     btnDelete.Enabled := Selected;
 
 end;
 
@@ -186,13 +180,37 @@ begin
     begin
       op := OperativeFromSelected;
       Remove(op);
-<<<<<<< HEAD
-=======
-      WriteToFile;
->>>>>>> 2a64c72ea60110e66b4458e30f3a8f3b3f76cc64
       FillListBox;
     end;
   end;
+end;
+
+procedure TMainForm.btnEditClick(Sender: TObject);
+var
+   row, old : TOperative;
+begin
+     old := OperativeFromSelected;
+     FormEdit.Form2.OperativeBeingEdited := @row;
+     FormEdit.Form2.edtFirstName.Text := old.FirstName;
+     FormEdit.Form2.edtLastName.Text := old.LastName;
+     FormEdit.Form2.edtNickName.Text := old.NickName;
+     FormEdit.Form2.dtpBirthDate.Date := old.DateOfBirth;
+     FormEdit.Form2.edtPlaceOfBirth.Text := old.BirthPlace;
+
+     
+     FormEdit.Form2.ShowModal;
+
+     if FormEdit.Form2.OperativeBeingEdited <> nil then
+     begin
+         UpdateOperative(old, row);
+     end;
+
+     FillListBox;
+<<<<<<< HEAD
+=======
+
+     //TODO: defaultowo wygasić btnDelete
+>>>>>>> 055f2407a3c3714965164b1bf824cef666918c72
 end;
 
 end.
