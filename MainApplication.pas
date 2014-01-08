@@ -4,25 +4,26 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils, FormAdd, FormEdit;
-  
-procedure Append(item : TElemType); stdcall
-	external 'LinkedList.dll' name 'Append';
-procedure WriteEach; stdcall
-	external 'LinkedList.dll' name 'WriteEach';
-procedure Seed; stdcall
-	external 'LinkedList.dll' name 'Seed';
-procedure WriteToFile; stdcall
-	external 'LinkedList.dll' name 'WriteToFile';
-procedure ReadFromFile; stdcall
-  external 'LinkedList.dll' name 'ReadFromFile';
-function GetHead : PElem; stdcall
-  external 'LinkedList.dll' name 'GetHead';
-function EqualTOperatives : PElem; stdcall
-  external 'LinkedList.dll' name 'EqualTOperatives';
-procedure Remove(op : TOperative); stdcall
-  external 'LinkedList.dll' name 'Remove';
-procedure UpdateOperative(a, b : TOperative); stdcall;
+  Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils, FormAdd, FormEdit,
+  System.RegularExpressions;
+
+procedure Append(item: TElemType);
+stdcall external 'LinkedList.dll' name 'Append';
+procedure WriteEach;
+stdcall external 'LinkedList.dll' name 'WriteEach';
+procedure Seed;
+stdcall external 'LinkedList.dll' name 'Seed';
+procedure WriteToFile;
+stdcall external 'LinkedList.dll' name 'WriteToFile';
+procedure ReadFromFile;
+stdcall external 'LinkedList.dll' name 'ReadFromFile';
+function GetHead: PElem;
+stdcall external 'LinkedList.dll' name 'GetHead';
+function EqualTOperatives: PElem;
+stdcall external 'LinkedList.dll' name 'EqualTOperatives';
+procedure Remove(op: TOperative);
+stdcall external 'LinkedList.dll' name 'Remove';
+procedure UpdateOperative(a, b: TOperative); stdcall;
   external 'LinkedList.dll' name 'UpdateOperative';
 
 type
@@ -32,23 +33,27 @@ type
     btnAddOperative: TButton;
     btnEdit: TButton;
     btnSave: TButton;
+    tbSearchLastName: TEdit;
+    Label1: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
     procedure lvOperativesColumnClick(Sender: TObject; Column: TListColumn);
     procedure lvOperativesCompare(Sender: TObject; Item1, Item2: TListItem;
       Data: Integer; var Compare: Integer);
-    procedure lvOperativesSelectItem(Sender: TObject; Item: TListItem;
+    procedure lvOperativesSelectItem(Sender: TObject; item: TListItem;
       Selected: Boolean);
     procedure btnEditClick(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure tbSearchLastNameChange(Sender: TObject);
   private
-    SortDescending : Bool;
-    SortColumn : Integer;
-    PendingChanges : Bool;
+    SortDescending: Bool;
+    SortColumn: Integer;
+    PendingChanges: Bool;
     procedure FillListBox;
-    function OperativeFromSelected : TOperative;
+    procedure FilterListBox(pattern: string);
+    function OperativeFromSelected: TOperative;
   public
     { Public declarations }
   end;
@@ -62,25 +67,26 @@ implementation
 
 procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 var
-   dialogResult : Integer;
+  dialogResult: Integer;
 begin
-     if PendingChanges = True then
-     begin
-          dialogResult := MessageDlg('Zapisać zmiany?', mtConfirmation, mbYesNoCancel, 0);
-          if dialogResult = mrYes then
-          begin
-            WriteToFile;
-            CanClose := True;
-          end;
-          if dialogResult = mrNo then
-               begin
-                 CanClose := True;
-               end;
-          if dialogResult = mrCancel then
-          begin
-            CanClose := False;
-          end;
-     end;
+  if PendingChanges = True then
+  begin
+    dialogResult := MessageDlg('Zapisać zmiany?', mtConfirmation,
+      mbYesNoCancel, 0);
+    if dialogResult = mrYes then
+    begin
+      WriteToFile;
+      CanClose := True;
+    end;
+    if dialogResult = mrNo then
+    begin
+      CanClose := True;
+    end;
+    if dialogResult = mrCancel then
+    begin
+      CanClose := False;
+    end;
+  end;
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -93,59 +99,58 @@ end;
 procedure TMainForm.lvOperativesColumnClick(Sender: TObject;
   Column: TListColumn);
 begin
-     TListView(sender).SortType := stData;
-     if Column.Index <> SortColumn then
-     begin
-       SortColumn := Column.Index;
-       SortDescending := False;
-     end
-     else
-     begin
-       SortDescending := not SortDescending;
-       TListView(sender).SortType := stData;
-     end;
+  TListView(Sender).SortType := stData;
+  if Column.Index <> SortColumn then
+  begin
+    SortColumn := Column.Index;
+    SortDescending := False;
+  end
+  else
+  begin
+    SortDescending := not SortDescending;
+    TListView(Sender).SortType := stData;
+  end;
 
-       lvOperatives.AlphaSort;
+  lvOperatives.AlphaSort;
 
 end;
 
-procedure TMainForm.lvOperativesCompare(Sender: TObject; Item1,
-  Item2: TListItem; Data: Integer; var Compare: Integer);
+procedure TMainForm.lvOperativesCompare(Sender: TObject;
+  Item1, Item2: TListItem; Data: Integer; var Compare: Integer);
 begin
-     if SortColumn = 0 then
-     begin
-        Compare := CompareText(Item1.Caption, Item2.Caption)
-     end
-     else if SortColumn = 3 then
-     begin
-          Compare := CompareDate(
-          StrToDate(Item1.SubItems[2]),
-          StrToDate(Item2.SubItems[2]));
+  if SortColumn = 0 then
+  begin
+    Compare := CompareText(Item1.Caption, Item2.Caption)
+  end
+  else if SortColumn = 3 then
+  begin
+    Compare := CompareDate(StrToDate(Item1.SubItems[2]),
+      StrToDate(Item2.SubItems[2]));
 
-     end
-     else
-     begin
-         Compare := CompareText(Item1.SubItems[SortColumn-1],
-         Item2.SubItems[SortColumn-1]);
-     end;
+  end
+  else
+  begin
+    Compare := CompareText(Item1.SubItems[SortColumn - 1],
+      Item2.SubItems[SortColumn - 1]);
+  end;
 
-     if SortDescending then
-        Compare := -Compare;
+  if SortDescending then
+    Compare := -Compare;
 
 end;
 
-procedure TMainForm.lvOperativesSelectItem(Sender: TObject; Item: TListItem;
+procedure TMainForm.lvOperativesSelectItem(Sender: TObject; item: TListItem;
   Selected: Boolean);
 begin
-     btnEdit.Enabled := Selected;
-     btnDelete.Enabled := Selected;
+  btnEdit.Enabled := Selected;
+  btnDelete.Enabled := Selected;
 
 end;
 
 procedure TMainForm.FillListBox;
 var
-  iter : PElem;
-  item : TListItem;
+  iter: PElem;
+  item: TListItem;
 begin
   lvOperatives.Items.Clear;
   iter := GetHead;
@@ -161,47 +166,86 @@ begin
 
     iter := iter^.Next;
   end;
+  tbSearchLastName.Text = '';
+end;
+
+procedure TMainForm.FilterListBox(pattern: string);
+var
+  iter: PElem;
+  item: TListItem;
+  regexp: TRegEx;
+begin
+  if pattern.Length > 0 then
+  begin
+    lvOperatives.Items.Clear;
+    iter := GetHead;
+    regexp.Create(pattern, [roIgnoreCase]);
+
+    while iter <> nil do
+    begin
+      if regexp.IsMatch(iter^.Val.LastName) then
+      begin
+
+        item := lvOperatives.Items.Add;
+        item.Caption := iter^.Val.FirstName;
+        item.SubItems.Add(iter^.Val.LastName);
+        item.SubItems.Add(iter^.Val.NickName);
+        item.SubItems.Add(DateToStr(iter^.Val.DateOfBirth));
+        item.SubItems.Add(iter^.Val.BirthPlace);
+      end;
+      iter := iter^.Next;
+    end;
+  end
+  else
+  begin
+       FillListBox;
+  end;
 
 end;
 
 procedure TMainForm.btnAddOperativeClick(Sender: TObject);
 var
-  row : TOperative;
+  row: TOperative;
 begin
-     FormAdd.Form1.ShowModal;
+  FormAdd.Form1.ShowModal;
   FillListBox;
   if FormAdd.Form1.HasAdded then
   begin
-       PendingChanges := True;
+    PendingChanges := True;
   end;
-
 
 end;
 
-function TMainForm.OperativeFromSelected : TOperative;
+function TMainForm.OperativeFromSelected: TOperative;
 var
-  op : TOperative;
-  i : Integer;
+  op: TOperative;
+  i: Integer;
 begin
   for i := 0 to lvOperatives.Items.Count - 1 do
   begin
-    if lvOperatives.Items[i].Selected then //DAFUQ
-      begin
-        op.FirstName := lvOperatives.Items[i].Caption;
-        op.LastName := lvOperatives.Items[i].SubItems[0];
-        op.NickName := lvOperatives.Items[i].SubItems[1];
-        op.DateOfBirth := StrToDate(lvOperatives.Items[i].SubItems[2]);
-        op.BirthPlace := lvOperatives.Items[i].SubItems[3];
-        Result := op;
-        Exit;
-      end;
+    if lvOperatives.Items[i].Selected then // DAFUQ
+    begin
+      op.FirstName := lvOperatives.Items[i].Caption;
+      op.LastName := lvOperatives.Items[i].SubItems[0];
+      op.NickName := lvOperatives.Items[i].SubItems[1];
+      op.DateOfBirth := StrToDate(lvOperatives.Items[i].SubItems[2]);
+      op.BirthPlace := lvOperatives.Items[i].SubItems[3];
+      Result := op;
+      Exit;
+    end;
   end;
+end;
+
+procedure TMainForm.tbSearchLastNameChange(Sender: TObject);
+begin
+  FilterListBox(tbSearchLastName.Text);
+
 end;
 
 procedure TMainForm.btnDeleteClick(Sender: TObject);
 var
-  op : TOperative;
-  dlgResult : Integer;
+  op: TOperative;
+  dlgResult: Integer;
 begin
   if lvOperatives.Selected <> nil then
   begin
@@ -218,32 +262,31 @@ end;
 
 procedure TMainForm.btnEditClick(Sender: TObject);
 var
-   row, old : TOperative;
+  row, old: TOperative;
 begin
-     old := OperativeFromSelected;
-     FormEdit.Form2.OperativeBeingEdited := @row;
-     FormEdit.Form2.edtFirstName.Text := old.FirstName;
-     FormEdit.Form2.edtLastName.Text := old.LastName;
-     FormEdit.Form2.edtNickName.Text := old.NickName;
-     FormEdit.Form2.dtpBirthDate.Date := old.DateOfBirth;
-     FormEdit.Form2.edtPlaceOfBirth.Text := old.BirthPlace;
+  old := OperativeFromSelected;
+  FormEdit.Form2.OperativeBeingEdited := @row;
+  FormEdit.Form2.edtFirstName.Text := old.FirstName;
+  FormEdit.Form2.edtLastName.Text := old.LastName;
+  FormEdit.Form2.edtNickName.Text := old.NickName;
+  FormEdit.Form2.dtpBirthDate.Date := old.DateOfBirth;
+  FormEdit.Form2.edtPlaceOfBirth.Text := old.BirthPlace;
 
+  FormEdit.Form2.ShowModal;
 
-     FormEdit.Form2.ShowModal;
+  if FormEdit.Form2.OperativeBeingEdited <> nil then
+  begin
+    UpdateOperative(old, row);
+    PendingChanges := True;
+  end;
 
-     if FormEdit.Form2.OperativeBeingEdited <> nil then
-     begin
-         UpdateOperative(old, row);
-         PendingChanges := True;
-     end;
-
-     FillListBox;
+  FillListBox;
 end;
 
 procedure TMainForm.btnSaveClick(Sender: TObject);
 begin
-     WriteToFile;
-     ShowMessage('Zapisano');
+  WriteToFile;
+  ShowMessage('Zapisano');
 end;
 
 end.

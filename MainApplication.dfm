@@ -2,7 +2,7 @@ object MainForm: TMainForm
   Left = 343
   Top = 309
   Caption = 'Bolek'
-  ClientHeight = 369
+  ClientHeight = 487
   ClientWidth = 764
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,14 +16,21 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   DesignSize = (
     764
-    369)
+    487)
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 11
+    Width = 35
+    Height = 13
+    Caption = 'Szukaj:'
+  end
   object lvOperatives: TListView
     Left = 8
-    Top = 8
+    Top = 35
     Width = 666
-    Height = 353
+    Height = 444
     Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
@@ -73,7 +80,6 @@ object MainForm: TMainForm
     Caption = 'Dodaj'
     TabOrder = 2
     OnClick = btnAddOperativeClick
-    ExplicitLeft = 680
   end
   object btnEdit: TButton
     Left = 681
@@ -88,12 +94,21 @@ object MainForm: TMainForm
   end
   object btnSave: TButton
     Left = 681
-    Top = 336
+    Top = 454
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Zapisz'
     TabOrder = 4
     OnClick = btnSaveClick
+    ExplicitTop = 336
+  end
+  object tbSearchLastName: TEdit
+    Left = 49
+    Top = 8
+    Width = 121
+    Height = 21
+    TabOrder = 5
+    OnChange = tbSearchLastNameChange
   end
 end
