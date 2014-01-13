@@ -166,7 +166,7 @@ begin
 
     iter := iter^.Next;
   end;
-  tbSearchLastName.Text = '';
+  tbSearchLastName.Text := '';
 end;
 
 procedure TMainForm.FilterListBox(pattern: string);
