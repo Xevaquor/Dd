@@ -3,8 +3,8 @@ object Form2: TForm2
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Dodaj tajnego wsp'#243#322'pracownika'
-  ClientHeight = 195
-  ClientWidth = 353
+  ClientHeight = 231
+  ClientWidth = 361
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -131,36 +131,43 @@ object Form2: TForm2
     ParentFont = False
     Visible = False
   end
+  object Label2: TLabel
+    Left = 8
+    Top = 152
+    Width = 99
+    Height = 13
+    Caption = 'Zdj'#281'cie (opcjonalnie)'
+  end
   object edtFirstName: TEdit
-    Left = 104
+    Left = 113
     Top = 8
     Width = 121
     Height = 21
     TabOrder = 0
   end
   object edtLastName: TEdit
-    Left = 104
+    Left = 113
     Top = 35
     Width = 121
     Height = 21
     TabOrder = 1
   end
   object edtNickName: TEdit
-    Left = 104
+    Left = 113
     Top = 62
     Width = 121
     Height = 21
     TabOrder = 2
   end
   object edtPlaceOfBirth: TEdit
-    Left = 104
+    Left = 113
     Top = 120
     Width = 121
     Height = 21
     TabOrder = 4
   end
   object dtpBirthDate: TDateTimePicker
-    Left = 104
+    Left = 113
     Top = 93
     Width = 121
     Height = 21
@@ -169,8 +176,8 @@ object Form2: TForm2
     TabOrder = 3
   end
   object btnAdd: TButton
-    Left = 69
-    Top = 152
+    Left = 197
+    Top = 198
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -179,12 +186,32 @@ object Form2: TForm2
     OnClick = btnAddClick
   end
   object btnClose: TButton
-    Left = 150
-    Top = 152
+    Left = 278
+    Top = 198
     Width = 75
     Height = 25
     Caption = 'Zamknij okno'
     TabOrder = 6
     OnClick = btnCloseClick
+  end
+  object edtImagePath: TEdit
+    Left = 113
+    Top = 147
+    Width = 121
+    Height = 21
+    TabOrder = 7
+  end
+  object btnSelectImage: TButton
+    Left = 240
+    Top = 145
+    Width = 75
+    Height = 25
+    Caption = 'Wybierz'
+    TabOrder = 8
+    OnClick = btnSelectImageClick
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Left = 32
+    Top = 184
   end
 end

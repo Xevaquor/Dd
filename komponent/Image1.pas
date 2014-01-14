@@ -26,15 +26,27 @@ implementation
 constructor TImage1.Create(AOwner : TComponent);
 begin
      inherited Create(AOwner);
-     Picture.Bitmap.LoadFromResourceName(HInstance ,'DEFAULT_IMAGE');
+
+   // SetDefaultImage('xd');
+
 end;
 
 procedure TImage1.SetDefaultImage(path : String);
 begin
+try
+        begin
+
      if FileExists(path) then
         Picture.LoadFromFile(path)
      else
-         Picture.Bitmap.LoadFromResourceName(HInstance ,'DEFAULT_IMAGE');
+         Picture.LoadFromFile(GetCurrentDir + '\\default.bmp');
+             end;
+finally
+  begin
+
+
+  end;
+end;
 end;
 
 procedure Register;

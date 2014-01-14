@@ -153,9 +153,13 @@ begin
   if lvOperatives.Selected <> nil then
   begin
       op := OperativeFromSelected;
-      imgImage.SetDefaultImage(op.ImagePath);
+      imgImage.SetDefaultImage(
+      GetCurrentDir + '\\media\\' + op.ImagePath);
+  end
+  else
+  begin
+    imgImage.SetDefaultImage('xd');
   end;
-
 
 end;
 
@@ -271,6 +275,8 @@ begin
       PendingChanges := True;
     end;
   end;
+  btnDelete.Enabled := False;
+  btnEdit.Enabled := False;
 end;
 
 procedure TMainForm.btnEditClick(Sender: TObject);

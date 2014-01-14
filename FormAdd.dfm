@@ -199,6 +199,7 @@ object Form1: TForm1
     Top = 147
     Width = 121
     Height = 21
+    ReadOnly = True
     TabOrder = 7
   end
   object btnSelectImage: TButton

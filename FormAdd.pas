@@ -37,6 +37,7 @@ type
     procedure btnCloseClick(Sender: TObject);
     procedure btnSelectImageClick(Sender: TObject);
   private
+    RealFileName : String;
     function ValidateForm : Boolean;
   public
     HasAdded : Bool;
@@ -95,7 +96,7 @@ begin
        entry.NickName := edtNickName.Text;
        entry.BirthPlace := edtPlaceOfBirth.Text;
        entry.DateOfBirth := dtpBirthDate.DateTime;
-       entry.ImagePath := edtImagePath.Text;
+       entry.ImagePath := RealFileName;
 
        Append(entry);
 
@@ -117,10 +118,15 @@ begin
 end;
 
 procedure TForm1.btnSelectImageClick(Sender: TObject);
+var
+unique : TGuid;
 begin
      if OpenPictureDialog1.Execute then
      begin
-          edtImagePath.Text := OpenPictureDialog1.FileName;
+          CreateGUID(unique);
+         RealFileName := guidTostring(unique) + '.bmp';
+         edtImagePath.Text := OpenPictureDialog1.FileName;
+          CopyFile(PChar( OpenPictureDialog1.FileName),  PChar(GetCurrentDir + '\\media\\' + RealFileName ),False );
      end;
 end;
 
