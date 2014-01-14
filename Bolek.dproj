@@ -84,6 +84,10 @@
             <Form>Form2</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <RcItem Include="komponent\default.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>DEFAULT_IMAGE</ResourceId>
+        </RcItem>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

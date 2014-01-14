@@ -2,6 +2,8 @@ program Bolek;
 
 
 
+{$R *.dres}
+
 uses
   Forms,
   MainApplication in 'MainApplication.pas' {MainForm},

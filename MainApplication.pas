@@ -25,6 +25,8 @@ procedure Remove(op: TOperative);
 stdcall external 'LinkedList.dll' name 'Remove';
 procedure UpdateOperative(a, b: TOperative); stdcall;
   external 'LinkedList.dll' name 'UpdateOperative';
+function GetImagePath(op : TOperative) : ShortString; stdcall;
+  external 'LinkedList.dll' name 'GetImagePath';
 
 type
   TMainForm = class(TForm)
@@ -142,9 +144,18 @@ end;
 
 procedure TMainForm.lvOperativesSelectItem(Sender: TObject; item: TListItem;
   Selected: Boolean);
+var
+   op : TOperative;
 begin
   btnEdit.Enabled := Selected;
   btnDelete.Enabled := Selected;
+
+  if lvOperatives.Selected <> nil then
+  begin
+      op := OperativeFromSelected;
+      imgImage.SetDefaultImage(op.ImagePath);
+  end;
+
 
 end;
 
@@ -231,6 +242,7 @@ begin
       op.NickName := lvOperatives.Items[i].SubItems[1];
       op.DateOfBirth := StrToDate(lvOperatives.Items[i].SubItems[2]);
       op.BirthPlace := lvOperatives.Items[i].SubItems[3];
+      op.ImagePath := GetImagePath(op);
       Result := op;
       Exit;
     end;

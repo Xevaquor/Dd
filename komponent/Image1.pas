@@ -13,7 +13,7 @@ type
     { Protected declarations }
   public
     constructor Create(AOwner : TComponent); override;
-    procedure SetDefaultImage;
+    procedure SetDefaultImage(path: String);
   published
     { Published declarations }
   end;
@@ -29,9 +29,12 @@ begin
      Picture.Bitmap.LoadFromResourceName(HInstance ,'DEFAULT_IMAGE');
 end;
 
-procedure TImage1.SetDefaultImage;
+procedure TImage1.SetDefaultImage(path : String);
 begin
-     Picture.Bitmap.LoadFromResourceName(HInstance ,'DEFAULT_IMAGE');
+     if FileExists(path) then
+        Picture.LoadFromFile(path)
+     else
+         Picture.Bitmap.LoadFromResourceName(HInstance ,'DEFAULT_IMAGE');
 end;
 
 procedure Register;

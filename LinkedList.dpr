@@ -154,6 +154,23 @@ begin
             (a.BirthPlace = b.BirthPlace);
 end;
 
+function GetImagePath(op : TOperative) : ShortString;stdcall;
+var
+   iter : PElem;
+begin
+     iter := gHead;
+     while iter <> nil do
+     begin
+          if EqualTOperatives(op, iter^.Val) then
+          begin
+               Result := iter^.Val.ImagePath;
+               Exit;
+          end;
+       iter := iter^.Next;
+     end;
+
+end;
+
 procedure UpdateOperative(old, new : TOperative); stdcall;
 var
    iter : PElem;
@@ -163,12 +180,12 @@ begin
      begin
           if EqualTOperatives(old, iter^.Val) then
           begin
-               iter^.Val := new;            
+               iter^.Val := new;
                Exit;
           end;
        iter := iter^.Next;
      end;
-     
+
 end;
 
 procedure Remove(op : TOperative); stdcall;
@@ -207,7 +224,8 @@ exports
   EqualTOperatives name 'EqualTOperatives',
   Remove name 'Remove',
   Seed name 'Seed',
-  UpdateOperative name 'UpdateOperative';
+  UpdateOperative name 'UpdateOperative',
+  GetImagePath name 'GetImagePath';
 
 begin
   gHead := nil;

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls,
-  System.RegularExpressions, DateUtils, Types, TOperativeUnit;
+  System.RegularExpressions, DateUtils, Types, TOperativeUnit, Vcl.ExtDlgs;
 
 procedure Append(item : TElemType); stdcall
 	external 'LinkedList.dll' name 'Append';
@@ -29,8 +29,13 @@ type
     epNickName: TLabel;
     epDateOfBirth: TLabel;
     epPlaceOfBirth: TLabel;
+    Label2: TLabel;
+    edtImagePath: TEdit;
+    btnSelectImage: TButton;
+    OpenPictureDialog1: TOpenPictureDialog;
     procedure btnAddClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
+    procedure btnSelectImageClick(Sender: TObject);
   private
     function ValidateForm : Boolean;
   public
@@ -90,6 +95,7 @@ begin
        entry.NickName := edtNickName.Text;
        entry.BirthPlace := edtPlaceOfBirth.Text;
        entry.DateOfBirth := dtpBirthDate.DateTime;
+       entry.ImagePath := edtImagePath.Text;
 
        Append(entry);
 
@@ -97,6 +103,7 @@ begin
        edtLastName.Text := '';
        edtNickName.Text := '';
        edtPlaceOfBirth.Text := '';
+       edtImagePath.Text := '';
        edtFirstName.SetFocus;
 
        HasAdded := true;
@@ -107,6 +114,14 @@ procedure TForm1.btnCloseClick(Sender: TObject);
 begin
      HasAdded:= False;
      Close;
+end;
+
+procedure TForm1.btnSelectImageClick(Sender: TObject);
+begin
+     if OpenPictureDialog1.Execute then
+     begin
+          edtImagePath.Text := OpenPictureDialog1.FileName;
+     end;
 end;
 
 end.
