@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils, FormAdd, FormEdit,
-  System.RegularExpressions;
+  System.RegularExpressions, Vcl.ExtCtrls, Image1;
 
 procedure Append(item: TElemType);
 stdcall external 'LinkedList.dll' name 'Append';
@@ -35,6 +35,7 @@ type
     btnSave: TButton;
     tbSearchLastName: TEdit;
     Label1: TLabel;
+    imgImage: TImage1;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
