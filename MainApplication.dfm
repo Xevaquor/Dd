@@ -1,7 +1,7 @@
 object MainForm: TMainForm
   Left = 343
   Top = 309
-  Caption = 'Bolek'
+  Caption = 'Bolek - Ewidencja Tajnych Wsp'#243#322'pracownik'#243'w'
   ClientHeight = 487
   ClientWidth = 997
   Color = clBtnFace
@@ -31,8 +31,28 @@ object MainForm: TMainForm
     Top = 39
     Width = 230
     Height = 210
+    Anchors = [akTop, akRight, akBottom]
     Proportional = True
     Stretch = True
+  end
+  object Label2: TLabel
+    Left = 759
+    Top = 408
+    Width = 205
+    Height = 26
+    Anchors = [akRight, akBottom]
+    Caption = 
+      'Zbie'#380'no'#347#263' danych z prawdziwymi osobami  przypadkowa i niezamierz' +
+      'ona'
+    Color = clRed
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = 13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+    WordWrap = True
   end
   object lvOperatives: TListView
     Left = 8
@@ -70,10 +90,10 @@ object MainForm: TMainForm
   end
   object btnDelete: TButton
     Left = 759
-    Top = 343
+    Top = 317
     Width = 75
     Height = 25
-    Anchors = [akTop, akRight]
+    Anchors = [akRight, akBottom]
     Caption = 'Usu'#324
     Enabled = False
     TabOrder = 1
@@ -84,7 +104,7 @@ object MainForm: TMainForm
     Top = 255
     Width = 75
     Height = 25
-    Anchors = [akTop, akRight]
+    Anchors = [akRight, akBottom]
     Caption = 'Dodaj'
     TabOrder = 2
     OnClick = btnAddOperativeClick
@@ -94,15 +114,15 @@ object MainForm: TMainForm
     Top = 286
     Width = 75
     Height = 25
-    Anchors = [akTop, akRight]
+    Anchors = [akRight, akBottom]
     Caption = 'Edytuj'
     Enabled = False
     TabOrder = 3
     OnClick = btnEditClick
   end
   object btnSave: TButton
-    Left = 914
-    Top = 255
+    Left = 759
+    Top = 454
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]

@@ -38,6 +38,7 @@ type
     tbSearchLastName: TEdit;
     Label1: TLabel;
     imgImage: TImage1;
+    Label2: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
