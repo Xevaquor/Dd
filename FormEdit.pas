@@ -36,11 +36,13 @@ type
     procedure btnAddClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure btnSelectImageClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     RealFileName : String;
     function ValidateForm : Boolean;
   public
     OperativeBeingEdited : POperative;
+    DialogResult : Boolean;
   end;
 
 var
@@ -95,7 +97,7 @@ begin
        OperativeBeingEdited^.BirthPlace := edtPlaceOfBirth.Text;
        OperativeBeingEdited^.DateOfBirth := dtpBirthDate.DateTime;
        OperativeBeingEdited^.ImagePath := RealFileName;
-
+       DialogResult := True;
        Close;
 
      end;
@@ -119,6 +121,12 @@ begin
          edtImagePath.Text := OpenPictureDialog1.FileName;
           CopyFile(PChar( OpenPictureDialog1.FileName),  PChar(GetCurrentDir + '\\media\\' + RealFileName ),False );
      end;
+end;
+
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+     OperativeBeingEdited := nil;
+     DialogResult := False;
 end;
 
 end.

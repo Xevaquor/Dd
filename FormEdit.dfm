@@ -14,6 +14,7 @@ object Form2: TForm2
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poOwnerFormCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel

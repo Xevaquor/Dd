@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{32A2F258-EFED-4484-A8AB-3F799048998B}</ProjectGuid>
+        <ProjectGuid>{D655292E-D6B7-4D38-907C-1B4CF6AC0EA2}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="LinkedList.dproj">
@@ -10,21 +10,6 @@
             <Dependencies/>
         </Projects>
         <Projects Include="Bolek.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="komponent\customVCL.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="komponent\xd.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="komponent\paczka.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="C:\Users\Xevaquor\Documents\RAD Studio\Projects\pacz.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="komponent\sedsdsdfsferds.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -62,59 +47,14 @@
     <Target Name="Bolek:Make">
         <MSBuild Projects="Bolek.dproj" Targets="Make"/>
     </Target>
-    <Target Name="customVCL">
-        <MSBuild Projects="komponent\customVCL.dproj"/>
-    </Target>
-    <Target Name="customVCL:Clean">
-        <MSBuild Projects="komponent\customVCL.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="customVCL:Make">
-        <MSBuild Projects="komponent\customVCL.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="xd">
-        <MSBuild Projects="komponent\xd.dproj"/>
-    </Target>
-    <Target Name="xd:Clean">
-        <MSBuild Projects="komponent\xd.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="xd:Make">
-        <MSBuild Projects="komponent\xd.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="paczka">
-        <MSBuild Projects="komponent\paczka.dproj"/>
-    </Target>
-    <Target Name="paczka:Clean">
-        <MSBuild Projects="komponent\paczka.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="paczka:Make">
-        <MSBuild Projects="komponent\paczka.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="pacz">
-        <MSBuild Projects="C:\Users\Xevaquor\Documents\RAD Studio\Projects\pacz.dproj"/>
-    </Target>
-    <Target Name="pacz:Clean">
-        <MSBuild Projects="C:\Users\Xevaquor\Documents\RAD Studio\Projects\pacz.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="pacz:Make">
-        <MSBuild Projects="C:\Users\Xevaquor\Documents\RAD Studio\Projects\pacz.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="sedsdsdfsferds">
-        <MSBuild Projects="komponent\sedsdsdfsferds.dproj"/>
-    </Target>
-    <Target Name="sedsdsdfsferds:Clean">
-        <MSBuild Projects="komponent\sedsdsdfsferds.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="sedsdsdfsferds:Make">
-        <MSBuild Projects="komponent\sedsdsdfsferds.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="LinkedList;LinkedListTest;Bolek;customVCL;xd;paczka;pacz;sedsdsdfsferds"/>
+        <CallTarget Targets="LinkedList;LinkedListTest;Bolek"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="LinkedList:Clean;LinkedListTest:Clean;Bolek:Clean;customVCL:Clean;xd:Clean;paczka:Clean;pacz:Clean;sedsdsdfsferds:Clean"/>
+        <CallTarget Targets="LinkedList:Clean;LinkedListTest:Clean;Bolek:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="LinkedList:Make;LinkedListTest:Make;Bolek:Make;customVCL:Make;xd:Make;paczka:Make;pacz:Make;sedsdsdfsferds:Make"/>
+        <CallTarget Targets="LinkedList:Make;LinkedListTest:Make;Bolek:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

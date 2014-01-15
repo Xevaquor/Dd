@@ -292,9 +292,10 @@ begin
   FormEdit.Form2.dtpBirthDate.Date := old.DateOfBirth;
   FormEdit.Form2.edtPlaceOfBirth.Text := old.BirthPlace;
 
+  FormEdit.Form2.DialogResult := False;
   FormEdit.Form2.ShowModal;
 
-  if FormEdit.Form2.OperativeBeingEdited <> nil then
+  if FormEdit.Form2.DialogResult = True then
   begin
     UpdateOperative(old, row);
     PendingChanges := True;
