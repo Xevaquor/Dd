@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils, FormAdd, FormEdit,
-  System.RegularExpressions, Vcl.ExtCtrls, Image1;
+  System.RegularExpressions, Vcl.ExtCtrls, Image17;
 
 procedure Append(item: TElemType);
 stdcall external 'LinkedList.dll' name 'Append';
@@ -37,8 +37,8 @@ type
     btnSave: TButton;
     tbSearchLastName: TEdit;
     Label1: TLabel;
-    imgImage: TImage1;
     Label2: TLabel;
+    Image171: TImage17;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
@@ -55,6 +55,7 @@ type
     SortDescending: Bool;
     SortColumn: Integer;
     PendingChanges: Bool;
+    DefaultImagePath : String;
     procedure FillListBox;
     procedure FilterListBox(pattern: string);
     function OperativeFromSelected: TOperative;
@@ -95,6 +96,7 @@ end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
+  DefaultImagePath := GetCurrentDir + '\\default.bmp';
   ReadFromFile;
   FillListBox;
   PendingChanges := False;
@@ -154,12 +156,11 @@ begin
   if lvOperatives.Selected <> nil then
   begin
       op := OperativeFromSelected;
-      imgImage.SetDefaultImage(
-      GetCurrentDir + '\\media\\' + op.ImagePath);
+      Image171.SetDefaultImage(GetCurrentDir + '\\media\\' + op.ImagePath, DefaultImagePath);
   end
   else
   begin
-    imgImage.SetDefaultImage('xd');
+    Image171.SetDefaultImage('xd', DefaultImagePath);
   end;
 
 end;
@@ -291,6 +292,7 @@ begin
   FormEdit.Form2.edtNickName.Text := old.NickName;
   FormEdit.Form2.dtpBirthDate.Date := old.DateOfBirth;
   FormEdit.Form2.edtPlaceOfBirth.Text := old.BirthPlace;
+  FormEdit.Form2.edtImagePath.Text := old.ImagePath;
 
   FormEdit.Form2.DialogResult := False;
   FormEdit.Form2.ShowModal;

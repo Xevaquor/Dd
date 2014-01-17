@@ -26,15 +26,6 @@ object MainForm: TMainForm
     Height = 13
     Caption = 'Szukaj:'
   end
-  object imgImage: TImage1
-    Left = 759
-    Top = 39
-    Width = 230
-    Height = 210
-    Anchors = [akTop, akRight, akBottom]
-    Proportional = True
-    Stretch = True
-  end
   object Label2: TLabel
     Left = 759
     Top = 408
@@ -53,6 +44,14 @@ object MainForm: TMainForm
     ParentColor = False
     ParentFont = False
     WordWrap = True
+  end
+  object Image171: TImage17
+    Left = 759
+    Top = 35
+    Width = 230
+    Height = 214
+    Proportional = True
+    Stretch = True
   end
   object lvOperatives: TListView
     Left = 8
