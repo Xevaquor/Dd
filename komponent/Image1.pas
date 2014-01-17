@@ -12,8 +12,7 @@ type
   protected
     { Protected declarations }
   public
-    constructor Create(AOwner : TComponent); override;
-    procedure SetDefaultImage(path: String);
+    procedure SetDefaultImage(path, defaultImg: String);
   published
     { Published declarations }
   end;
@@ -22,31 +21,21 @@ procedure Register;
 
 implementation
 
-
-constructor TImage1.Create(AOwner : TComponent);
+procedure TImage1.SetDefaultImage(path, defaultImg: String);
 begin
-     inherited Create(AOwner);
+  try
+    begin
 
-   // SetDefaultImage('xd');
-
-end;
-
-procedure TImage1.SetDefaultImage(path : String);
-begin
-try
-        begin
-
-     if FileExists(path) then
+      if FileExists(path) then
         Picture.LoadFromFile(path)
-     else
-         Picture.LoadFromFile(GetCurrentDir + '\\default.bmp');
-             end;
-finally
-  begin
+      else if FileExists(defaultImg) then
+        Picture.LoadFromFile(defaultImg)
+    end;
+  finally
+    begin
 
-
+    end;
   end;
-end;
 end;
 
 procedure Register;
@@ -55,10 +44,3 @@ begin
 end;
 
 end.
-
-
-
-
-
-
-
