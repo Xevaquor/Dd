@@ -2,7 +2,7 @@ object MainForm: TMainForm
   Left = 343
   Top = 309
   Caption = 'Bolek - Ewidencja Tajnych Wsp'#243#322'pracownik'#243'w'
-  ClientHeight = 487
+  ClientHeight = 488
   ClientWidth = 998
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +16,7 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   DesignSize = (
     998
-    487)
+    488)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -49,7 +49,7 @@ object MainForm: TMainForm
     Left = 8
     Top = 35
     Width = 901
-    Height = 439
+    Height = 440
     Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
@@ -73,7 +73,7 @@ object MainForm: TMainForm
       end>
     ReadOnly = True
     RowSelect = True
-    TabOrder = 2
+    TabOrder = 4
     ViewStyle = vsReport
     OnColumnClick = lvOperativesColumnClick
     OnCompare = lvOperativesCompare
@@ -81,44 +81,44 @@ object MainForm: TMainForm
   end
   object btnDelete: TButton
     Left = 915
-    Top = 97
+    Top = 98
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Usu'#324
     Enabled = False
-    TabOrder = 5
+    TabOrder = 3
     OnClick = btnDeleteClick
   end
   object btnAddOperative: TButton
     Left = 915
-    Top = 35
+    Top = 36
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Dodaj'
-    TabOrder = 3
+    TabOrder = 0
     OnClick = btnAddOperativeClick
   end
   object btnEdit: TButton
     Left = 915
-    Top = 66
+    Top = 67
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Edytuj'
     Enabled = False
-    TabOrder = 4
+    TabOrder = 1
     OnClick = btnEditClick
   end
   object btnSave: TButton
     Left = 915
-    Top = 449
+    Top = 450
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Zapisz'
-    TabOrder = 6
+    TabOrder = 2
     OnClick = btnSaveClick
   end
   object tbSearchNickName: TWatermarkEdit
@@ -132,7 +132,7 @@ object MainForm: TMainForm
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 6
     Text = 'watermark'
     OnChange = tbSearchNickNameChanged
   end
@@ -147,7 +147,7 @@ object MainForm: TMainForm
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 0
+    TabOrder = 5
     Text = 'watermark'
     OnChange = tbSearchLastNameChanged
   end

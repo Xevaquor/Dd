@@ -56,7 +56,7 @@ type
     PendingChanges: Bool;
     DefaultImagePath : String;
     procedure FillListBox;
-    procedure FilterListBox(lastName, nickName: string);
+    procedure FilterListBox;
     function OperativeFromSelected: TOperative;
   public
     { Public declarations }
@@ -106,6 +106,9 @@ begin
   tbSearchLastName.Clear;
 
   FillListBox;
+
+  tbSearchNickName.CallFocusLost;
+  tbSearchLastName.CallFocusLost;
 end;
 
 procedure TMainForm.lvOperativesColumnClick(Sender: TObject;
@@ -165,29 +168,19 @@ var
   iter: PElem;
   item: TListItem;
 begin
-  lvOperatives.Items.Clear;
-  iter := GetHead;
+  FilterListBox;
 
-  while iter <> nil do
-  begin
-    item := lvOperatives.Items.Add;
-    item.Caption := iter^.Val.FirstName;
-    item.SubItems.Add(iter^.Val.LastName);
-    item.SubItems.Add(iter^.Val.NickName);
-    item.SubItems.Add(DateToStr(iter^.Val.DateOfBirth));
-    item.SubItems.Add(iter^.Val.BirthPlace);
-
-    iter := iter^.Next;
-  end;
-  tbSearchLastName.Text := '';
 end;
 
-procedure TMainForm.FilterListBox(lastName, nickName: string);
+procedure TMainForm.FilterListBox;
 var
+  lastName, nickName: string;
   iter: PElem;
   item: TListItem;
   regexp1, regexp2: TRegEx;
 begin
+lastName := tbSearchLastName.GetValue;
+nickName := tbSearchNickName.GetValue;
   if lastName.Length or nickName.Length > 0 then
   begin
     lvOperatives.Items.Clear;
@@ -218,7 +211,19 @@ begin
   end
   else
   begin
-       FillListBox;
+  lvOperatives.Clear;
+  iter := GetHead;
+       while iter <> nil do
+  begin
+    item := lvOperatives.Items.Add;
+    item.Caption := iter^.Val.FirstName;
+    item.SubItems.Add(iter^.Val.LastName);
+    item.SubItems.Add(iter^.Val.NickName);
+    item.SubItems.Add(DateToStr(iter^.Val.DateOfBirth));
+    item.SubItems.Add(iter^.Val.BirthPlace);
+
+    iter := iter^.Next;
+  end;
   end;
 
 end;
@@ -233,7 +238,7 @@ begin
   begin
     PendingChanges := True;
   end;
-
+  tbSearchLastName.CallFocusLost;
 end;
 
 function TMainForm.OperativeFromSelected: TOperative;
@@ -258,13 +263,13 @@ end;
 
 procedure TMainForm.tbSearchLastNameChanged(Sender: TObject);
 begin
-  FilterListBox(tbSearchLastName.GetValue, tbSearchNickName.GetValue);
+  FilterListBox();
   //tbSearchNickName.CallFocusLost;
 end;
 procedure TMainForm.tbSearchNickNameChanged(Sender: TObject);
 begin
-  FilterListBox(tbSearchLastName.GetValue, tbSearchNickName.GetValue);
-  tbSearchLastName.CallFocusLost;
+  FilterListBox();
+  //tbSearchLastName.CallFocusLost;
 end;
 
 procedure TMainForm.btnDeleteClick(Sender: TObject);
@@ -285,12 +290,16 @@ begin
   end;
   btnDelete.Enabled := False;
   btnEdit.Enabled := False;
+  tbSearchLastName.CallFocusLost;
 end;
 
 procedure TMainForm.btnEditClick(Sender: TObject);
 var
   row, old: TOperative;
 begin
+  if lvOperatives.Selected = nil then
+     Exit;
+
   old := OperativeFromSelected;
   FormEdit.Form2.OperativeBeingEdited := @row;
   FormEdit.Form2.edtFirstName.Text := old.FirstName;
@@ -309,12 +318,15 @@ begin
   end;
 
   FillListBox;
+  tbSearchLastName.CallFocusLost;
 end;
 
 procedure TMainForm.btnSaveClick(Sender: TObject);
 begin
   WriteToFile;
   ShowMessage('Zapisano');
+  tbSearchNickName.CallFocusLost;
+  PendingChanges := False;
 end;
 
 end.

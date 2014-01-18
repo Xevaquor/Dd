@@ -31,6 +31,7 @@ type
     epPlaceOfBirth: TLabel;
     procedure btnAddClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
       private
     function ValidateForm : Boolean;
   public
@@ -105,8 +106,12 @@ end;
 
 procedure TForm1.btnCloseClick(Sender: TObject);
 begin
-     HasAdded:= False;
      Close;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+     HasAdded := False;
 end;
 
 end.
