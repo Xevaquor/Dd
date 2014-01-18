@@ -91,7 +91,7 @@ end;
 function TWatermarkEdit.GetValue(): String;
 begin
      if IsEmpty then
-        Result := EmptyStr
+        Result := ''
      else
          Result := Text;
 end;

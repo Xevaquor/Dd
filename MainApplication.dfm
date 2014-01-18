@@ -50,7 +50,7 @@ object MainForm: TMainForm
     Left = 8
     Top = 35
     Width = 901
-    Height = 444
+    Height = 439
     Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
@@ -122,14 +122,6 @@ object MainForm: TMainForm
     TabOrder = 4
     OnClick = btnSaveClick
   end
-  object tbSearchLastName: TEdit
-    Left = 49
-    Top = 8
-    Width = 121
-    Height = 21
-    TabOrder = 5
-    OnChange = tbSearchLastNameChange
-  end
   object WatermarkEdit1: TWatermarkEdit
     Left = 240
     Top = 8
@@ -141,7 +133,22 @@ object MainForm: TMainForm
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    TabOrder = 5
+    Text = 'watermark'
+  end
+  object tbSearchLastName: TWatermarkEdit
+    Left = 49
+    Top = 8
+    Width = 121
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGray
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 6
     Text = 'watermark'
+    OnChange = tbSearchLastNameChange
   end
 end

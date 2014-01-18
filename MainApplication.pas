@@ -33,10 +33,10 @@ type
     btnAddOperative: TButton;
     btnEdit: TButton;
     btnSave: TButton;
-    tbSearchLastName: TEdit;
     Label1: TLabel;
     Label2: TLabel;
     WatermarkEdit1: TWatermarkEdit;
+    tbSearchLastName: TWatermarkEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
@@ -101,6 +101,9 @@ begin
 
   WatermarkEdit1.Watermark := 'yellow priest';
   WatermarkEdit1.Clear;
+
+  tbSearchLastName.Watermark := 'Nazwisko';
+  tbSearchLastName.Clear;
 end;
 
 procedure TMainForm.lvOperativesColumnClick(Sender: TObject;
@@ -246,7 +249,7 @@ end;
 
 procedure TMainForm.tbSearchLastNameChange(Sender: TObject);
 begin
-  FilterListBox(tbSearchLastName.Text);
+  FilterListBox(tbSearchLastName.GetValue);
 
 end;
 
