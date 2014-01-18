@@ -98,6 +98,9 @@ begin
   ReadFromFile;
   FillListBox;
   PendingChanges := False;
+
+  WatermarkEdit1.Watermark := 'yellow priest';
+  WatermarkEdit1.Clear;
 end;
 
 procedure TMainForm.lvOperativesColumnClick(Sender: TObject;

@@ -19,13 +19,22 @@ type
     function GetValue : String;
     procedure Change; override;
     constructor Create(AOwner: TComponent); override;
+    procedure Clear;
   published
-    { Published declarations }
   end;
 
 procedure Register;
 
 implementation
+
+procedure TWatermarkEdit.Clear;
+var
+  stub : TMessage;
+begin
+     stub.Msg := WM_NULL;
+  IsEmpty := True;
+  CMFocusLost(stub);
+end;
 
 procedure TWatermarkEdit.CMFocusGain(var Message: TMessage);
 begin
@@ -57,7 +66,7 @@ begin
      IsEmpty := True;
      Watermark := 'watermark';
      Text := Watermark;
-     Font.Color := clBlack;
+     Font.Color := clGray;
      end;
 
 procedure TWatermarkEdit.Change;
