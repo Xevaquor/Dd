@@ -27,11 +27,11 @@ object MainForm: TMainForm
     Caption = 'Szukaj:'
   end
   object Label2: TLabel
-    Left = 549
+    Left = 704
     Top = 3
     Width = 205
     Height = 26
-    Anchors = [akRight, akBottom]
+    Anchors = [akTop, akRight]
     Caption = 
       'Zbie'#380'no'#347#263' danych z prawdziwymi osobami  przypadkowa i niezamierz' +
       'ona'
@@ -44,7 +44,6 @@ object MainForm: TMainForm
     ParentColor = False
     ParentFont = False
     WordWrap = True
-    ExplicitLeft = 548
   end
   object lvOperatives: TListView
     Left = 8
@@ -74,7 +73,7 @@ object MainForm: TMainForm
       end>
     ReadOnly = True
     RowSelect = True
-    TabOrder = 0
+    TabOrder = 2
     ViewStyle = vsReport
     OnColumnClick = lvOperativesColumnClick
     OnCompare = lvOperativesCompare
@@ -88,7 +87,7 @@ object MainForm: TMainForm
     Anchors = [akRight, akBottom]
     Caption = 'Usu'#324
     Enabled = False
-    TabOrder = 1
+    TabOrder = 5
     OnClick = btnDeleteClick
   end
   object btnAddOperative: TButton
@@ -98,7 +97,7 @@ object MainForm: TMainForm
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Dodaj'
-    TabOrder = 2
+    TabOrder = 3
     OnClick = btnAddOperativeClick
   end
   object btnEdit: TButton
@@ -109,21 +108,21 @@ object MainForm: TMainForm
     Anchors = [akRight, akBottom]
     Caption = 'Edytuj'
     Enabled = False
-    TabOrder = 3
+    TabOrder = 4
     OnClick = btnEditClick
   end
   object btnSave: TButton
     Left = 915
-    Top = 454
+    Top = 449
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Zapisz'
-    TabOrder = 4
+    TabOrder = 6
     OnClick = btnSaveClick
   end
-  object WatermarkEdit1: TWatermarkEdit
-    Left = 240
+  object tbSearchNickName: TWatermarkEdit
+    Left = 176
     Top = 8
     Width = 121
     Height = 21
@@ -133,8 +132,9 @@ object MainForm: TMainForm
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 5
+    TabOrder = 1
     Text = 'watermark'
+    OnChange = tbSearchNickNameChanged
   end
   object tbSearchLastName: TWatermarkEdit
     Left = 49
@@ -147,8 +147,8 @@ object MainForm: TMainForm
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 6
+    TabOrder = 0
     Text = 'watermark'
-    OnChange = tbSearchLastNameChange
+    OnChange = tbSearchLastNameChanged
   end
 end

@@ -20,12 +20,21 @@ type
     procedure Change; override;
     constructor Create(AOwner: TComponent); override;
     procedure Clear;
+    procedure CallFocusLost;
   published
   end;
 
 procedure Register;
 
 implementation
+
+procedure TWatermarkEdit.CallFocusLost;
+var
+  stub : TMessage;
+begin
+stub.Msg := WM_NULL;
+  CMFocusLost(stub);
+end;
 
 procedure TWatermarkEdit.Clear;
 var
@@ -71,7 +80,6 @@ begin
 
 procedure TWatermarkEdit.Change;
 begin
-    inherited;
     if HandlingEvent then
        Exit;
 
@@ -85,6 +93,9 @@ begin
   begin
        IsEmpty := False;
   end;
+
+
+    inherited;
   HandlingEvent := False;
 end;
 

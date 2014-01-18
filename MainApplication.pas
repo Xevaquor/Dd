@@ -35,7 +35,7 @@ type
     btnSave: TButton;
     Label1: TLabel;
     Label2: TLabel;
-    WatermarkEdit1: TWatermarkEdit;
+    tbSearchNickName: TWatermarkEdit;
     tbSearchLastName: TWatermarkEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
@@ -48,14 +48,15 @@ type
     procedure btnEditClick(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure tbSearchLastNameChange(Sender: TObject);
+    procedure tbSearchNickNameChanged(Sender: TObject);
+    procedure tbSearchLastNameChanged(Sender: TObject);
   private
     SortDescending: Bool;
     SortColumn: Integer;
     PendingChanges: Bool;
     DefaultImagePath : String;
     procedure FillListBox;
-    procedure FilterListBox(pattern: string);
+    procedure FilterListBox(lastName, nickName: string);
     function OperativeFromSelected: TOperative;
   public
     { Public declarations }
@@ -96,14 +97,15 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   DefaultImagePath := GetCurrentDir + '\\default.bmp';
   ReadFromFile;
-  FillListBox;
   PendingChanges := False;
 
-  WatermarkEdit1.Watermark := 'yellow priest';
-  WatermarkEdit1.Clear;
+  tbSearchNickName.Watermark := 'Pseudonim';
+  tbSearchNickName.Clear;
 
   tbSearchLastName.Watermark := 'Nazwisko';
   tbSearchLastName.Clear;
+
+  FillListBox;
 end;
 
 procedure TMainForm.lvOperativesColumnClick(Sender: TObject;
@@ -180,21 +182,28 @@ begin
   tbSearchLastName.Text := '';
 end;
 
-procedure TMainForm.FilterListBox(pattern: string);
+procedure TMainForm.FilterListBox(lastName, nickName: string);
 var
   iter: PElem;
   item: TListItem;
-  regexp: TRegEx;
+  regexp1, regexp2: TRegEx;
 begin
-  if pattern.Length > 0 then
+  if lastName.Length or nickName.Length > 0 then
   begin
     lvOperatives.Items.Clear;
     iter := GetHead;
-    regexp.Create(pattern, [roIgnoreCase]);
+    if lastName = '' then
+       lastName := '.*';
+    if nickName = '' then
+       nickName := '.*';
+    
+    regexp1.Create(lastName, [roIgnoreCase]);
+    regexp2.Create(nickName, [roIgnoreCase]);
 
     while iter <> nil do
     begin
-      if regexp.IsMatch(iter^.Val.LastName) then
+      if regexp1.IsMatch(iter^.Val.LastName) and
+         regexp2.IsMatch(iter^.Val.NickName) then
       begin
 
         item := lvOperatives.Items.Add;
@@ -247,10 +256,15 @@ begin
   end;
 end;
 
-procedure TMainForm.tbSearchLastNameChange(Sender: TObject);
+procedure TMainForm.tbSearchLastNameChanged(Sender: TObject);
 begin
-  FilterListBox(tbSearchLastName.GetValue);
-
+  FilterListBox(tbSearchLastName.GetValue, tbSearchNickName.GetValue);
+  //tbSearchNickName.CallFocusLost;
+end;
+procedure TMainForm.tbSearchNickNameChanged(Sender: TObject);
+begin
+  FilterListBox(tbSearchLastName.GetValue, tbSearchNickName.GetValue);
+  tbSearchLastName.CallFocusLost;
 end;
 
 procedure TMainForm.btnDeleteClick(Sender: TObject);
