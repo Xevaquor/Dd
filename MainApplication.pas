@@ -25,8 +25,6 @@ procedure Remove(op: TOperative);
 stdcall external 'LinkedList.dll' name 'Remove';
 procedure UpdateOperative(a, b: TOperative); stdcall;
   external 'LinkedList.dll' name 'UpdateOperative';
-function GetImagePath(op : TOperative) : ShortString; stdcall;
-  external 'LinkedList.dll' name 'GetImagePath';
 
 type
   TMainForm = class(TForm)
@@ -38,7 +36,6 @@ type
     tbSearchLastName: TEdit;
     Label1: TLabel;
     Label2: TLabel;
-    Image171: TImage17;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
@@ -152,17 +149,6 @@ var
 begin
   btnEdit.Enabled := Selected;
   btnDelete.Enabled := Selected;
-
-  if lvOperatives.Selected <> nil then
-  begin
-      op := OperativeFromSelected;
-      Image171.SetDefaultImage(GetCurrentDir + '\\media\\' + op.ImagePath, DefaultImagePath);
-  end
-  else
-  begin
-    Image171.SetDefaultImage('xd', DefaultImagePath);
-  end;
-
 end;
 
 procedure TMainForm.FillListBox;
@@ -248,7 +234,6 @@ begin
       op.NickName := lvOperatives.Items[i].SubItems[1];
       op.DateOfBirth := StrToDate(lvOperatives.Items[i].SubItems[2]);
       op.BirthPlace := lvOperatives.Items[i].SubItems[3];
-      op.ImagePath := GetImagePath(op);
       Result := op;
       Exit;
     end;
@@ -292,7 +277,6 @@ begin
   FormEdit.Form2.edtNickName.Text := old.NickName;
   FormEdit.Form2.dtpBirthDate.Date := old.DateOfBirth;
   FormEdit.Form2.edtPlaceOfBirth.Text := old.BirthPlace;
-  FormEdit.Form2.edtImagePath.Text := old.ImagePath;
 
   FormEdit.Form2.DialogResult := False;
   FormEdit.Form2.ShowModal;

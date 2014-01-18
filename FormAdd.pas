@@ -29,15 +29,9 @@ type
     epNickName: TLabel;
     epDateOfBirth: TLabel;
     epPlaceOfBirth: TLabel;
-    Label2: TLabel;
-    edtImagePath: TEdit;
-    btnSelectImage: TButton;
-    OpenPictureDialog1: TOpenPictureDialog;
     procedure btnAddClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
-    procedure btnSelectImageClick(Sender: TObject);
-  private
-    RealFileName : String;
+      private
     function ValidateForm : Boolean;
   public
     HasAdded : Bool;
@@ -96,7 +90,6 @@ begin
        entry.NickName := edtNickName.Text;
        entry.BirthPlace := edtPlaceOfBirth.Text;
        entry.DateOfBirth := dtpBirthDate.DateTime;
-       entry.ImagePath := RealFileName;
 
        Append(entry);
 
@@ -104,7 +97,6 @@ begin
        edtLastName.Text := '';
        edtNickName.Text := '';
        edtPlaceOfBirth.Text := '';
-       edtImagePath.Text := '';
        edtFirstName.SetFocus;
 
        HasAdded := true;
@@ -115,19 +107,6 @@ procedure TForm1.btnCloseClick(Sender: TObject);
 begin
      HasAdded:= False;
      Close;
-end;
-
-procedure TForm1.btnSelectImageClick(Sender: TObject);
-var
-unique : TGuid;
-begin
-     if OpenPictureDialog1.Execute then
-     begin
-          CreateGUID(unique);
-         RealFileName := guidTostring(unique) + '.bmp';
-         edtImagePath.Text := OpenPictureDialog1.FileName;
-          CopyFile(PChar( OpenPictureDialog1.FileName),  PChar(GetCurrentDir + '\\media\\' + RealFileName ),False );
-     end;
 end;
 
 end.

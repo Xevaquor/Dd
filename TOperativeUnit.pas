@@ -10,7 +10,6 @@ type
 		NickName : ShortString;
 		DateOfBirth : TDateTime;
 		BirthPlace : ShortString;
-		ImagePath : ShortString;
 	end;
 
 type TElemType = TOperative;

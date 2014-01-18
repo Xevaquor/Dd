@@ -29,16 +29,10 @@ type
     epPlaceOfBirth: TLabel;
     btnAdd: TButton;
     btnClose: TButton;
-    edtImagePath: TEdit;
-    btnSelectImage: TButton;
-    Label2: TLabel;
-    OpenPictureDialog1: TOpenPictureDialog;
     procedure btnAddClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
-    procedure btnSelectImageClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
-    RealFileName : String;
     function ValidateForm : Boolean;
   public
     OperativeBeingEdited : POperative;
@@ -96,7 +90,6 @@ begin
        OperativeBeingEdited^.NickName := edtNickName.Text;
        OperativeBeingEdited^.BirthPlace := edtPlaceOfBirth.Text;
        OperativeBeingEdited^.DateOfBirth := dtpBirthDate.DateTime;
-       OperativeBeingEdited^.ImagePath := RealFileName;
        DialogResult := True;
        Close;
 
@@ -109,19 +102,6 @@ begin
      Close;
 end;
 
-procedure TForm2.btnSelectImageClick(Sender: TObject);
-var
-unique : TGuid;
-begin
-
-     if OpenPictureDialog1.Execute then
-     begin
-          CreateGUID(unique);
-         RealFileName := guidTostring(unique) + '.bmp';
-         edtImagePath.Text := OpenPictureDialog1.FileName;
-          CopyFile(PChar( OpenPictureDialog1.FileName),  PChar(GetCurrentDir + '\\media\\' + RealFileName ),False );
-     end;
-end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin

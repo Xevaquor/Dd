@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{073F8E5D-73CF-47B4-85C1-7A3174DDA25A}</ProjectGuid>
+        <ProjectGuid>{FE1B0ED3-425B-4301-BB01-50D20725CB2B}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="LinkedList.dproj">
@@ -10,9 +10,6 @@
             <Dependencies/>
         </Projects>
         <Projects Include="Bolek.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="C:\Users\Xevaquor\Documents\RAD Studio\Projects\image17.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -50,23 +47,14 @@
     <Target Name="Bolek:Make">
         <MSBuild Projects="Bolek.dproj" Targets="Make"/>
     </Target>
-    <Target Name="image17">
-        <MSBuild Projects="C:\Users\Xevaquor\Documents\RAD Studio\Projects\image17.dproj"/>
-    </Target>
-    <Target Name="image17:Clean">
-        <MSBuild Projects="C:\Users\Xevaquor\Documents\RAD Studio\Projects\image17.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="image17:Make">
-        <MSBuild Projects="C:\Users\Xevaquor\Documents\RAD Studio\Projects\image17.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="LinkedList;LinkedListTest;Bolek;image17"/>
+        <CallTarget Targets="LinkedList;LinkedListTest;Bolek"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="LinkedList:Clean;LinkedListTest:Clean;Bolek:Clean;image17:Clean"/>
+        <CallTarget Targets="LinkedList:Clean;LinkedListTest:Clean;Bolek:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="LinkedList:Make;LinkedListTest:Make;Bolek:Make;image17:Make"/>
+        <CallTarget Targets="LinkedList:Make;LinkedListTest:Make;Bolek:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

@@ -3,7 +3,7 @@ object MainForm: TMainForm
   Top = 309
   Caption = 'Bolek - Ewidencja Tajnych Wsp'#243#322'pracownik'#243'w'
   ClientHeight = 487
-  ClientWidth = 997
+  ClientWidth = 998
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object MainForm: TMainForm
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   DesignSize = (
-    997
+    998
     487)
   PixelsPerInch = 96
   TextHeight = 13
@@ -27,8 +27,8 @@ object MainForm: TMainForm
     Caption = 'Szukaj:'
   end
   object Label2: TLabel
-    Left = 759
-    Top = 408
+    Left = 549
+    Top = 3
     Width = 205
     Height = 26
     Anchors = [akRight, akBottom]
@@ -44,19 +44,12 @@ object MainForm: TMainForm
     ParentColor = False
     ParentFont = False
     WordWrap = True
-  end
-  object Image171: TImage17
-    Left = 759
-    Top = 35
-    Width = 230
-    Height = 214
-    Proportional = True
-    Stretch = True
+    ExplicitLeft = 548
   end
   object lvOperatives: TListView
     Left = 8
     Top = 35
-    Width = 745
+    Width = 901
     Height = 444
     Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
@@ -88,8 +81,8 @@ object MainForm: TMainForm
     OnSelectItem = lvOperativesSelectItem
   end
   object btnDelete: TButton
-    Left = 759
-    Top = 317
+    Left = 915
+    Top = 97
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
@@ -99,8 +92,8 @@ object MainForm: TMainForm
     OnClick = btnDeleteClick
   end
   object btnAddOperative: TButton
-    Left = 759
-    Top = 255
+    Left = 915
+    Top = 35
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
@@ -109,8 +102,8 @@ object MainForm: TMainForm
     OnClick = btnAddOperativeClick
   end
   object btnEdit: TButton
-    Left = 759
-    Top = 286
+    Left = 915
+    Top = 66
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
@@ -120,7 +113,7 @@ object MainForm: TMainForm
     OnClick = btnEditClick
   end
   object btnSave: TButton
-    Left = 759
+    Left = 915
     Top = 454
     Width = 75
     Height = 25

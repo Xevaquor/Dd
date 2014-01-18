@@ -123,6 +123,9 @@ var
   f : File of TOperative;
   entry : TOperative;
 begin
+  if not FileExists('database.dat') then
+     Exit;
+
   AssignFile(f, 'database.dat');
   Reset(f);
 
@@ -152,23 +155,6 @@ begin
             (a.NickName = b.NickName) and
             (CompareDate(a.DateOfBirth, b.DateOfBirth) = EqualsValue) and
             (a.BirthPlace = b.BirthPlace);
-end;
-
-function GetImagePath(op : TOperative) : ShortString;stdcall;
-var
-   iter : PElem;
-begin
-     iter := gHead;
-     while iter <> nil do
-     begin
-          if EqualTOperatives(op, iter^.Val) then
-          begin
-               Result := iter^.Val.ImagePath;
-               Exit;
-          end;
-       iter := iter^.Next;
-     end;
-
 end;
 
 procedure UpdateOperative(old, new : TOperative); stdcall;
@@ -224,8 +210,7 @@ exports
   EqualTOperatives name 'EqualTOperatives',
   Remove name 'Remove',
   Seed name 'Seed',
-  UpdateOperative name 'UpdateOperative',
-  GetImagePath name 'GetImagePath';
+  UpdateOperative name 'UpdateOperative';
 
 begin
   gHead := nil;

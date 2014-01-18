@@ -2,8 +2,8 @@ object Form2: TForm2
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Dodaj tajnego wsp'#243#322'pracownika'
-  ClientHeight = 231
+  Caption = 'Edytuj TW'
+  ClientHeight = 189
   ClientWidth = 361
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -132,13 +132,6 @@ object Form2: TForm2
     ParentFont = False
     Visible = False
   end
-  object Label2: TLabel
-    Left = 8
-    Top = 152
-    Width = 99
-    Height = 13
-    Caption = 'Zdj'#281'cie (opcjonalnie)'
-  end
   object edtFirstName: TEdit
     Left = 113
     Top = 8
@@ -178,7 +171,7 @@ object Form2: TForm2
   end
   object btnAdd: TButton
     Left = 197
-    Top = 198
+    Top = 150
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -188,31 +181,11 @@ object Form2: TForm2
   end
   object btnClose: TButton
     Left = 278
-    Top = 198
+    Top = 150
     Width = 75
     Height = 25
     Caption = 'Zamknij okno'
     TabOrder = 6
     OnClick = btnCloseClick
-  end
-  object edtImagePath: TEdit
-    Left = 113
-    Top = 147
-    Width = 121
-    Height = 21
-    TabOrder = 7
-  end
-  object btnSelectImage: TButton
-    Left = 240
-    Top = 145
-    Width = 75
-    Height = 25
-    Caption = 'Wybierz'
-    TabOrder = 8
-    OnClick = btnSelectImageClick
-  end
-  object OpenPictureDialog1: TOpenPictureDialog
-    Left = 32
-    Top = 184
   end
 end
