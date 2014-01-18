@@ -130,4 +130,18 @@ object MainForm: TMainForm
     TabOrder = 5
     OnChange = tbSearchLastNameChange
   end
+  object WatermarkEdit1: TWatermarkEdit
+    Left = 240
+    Top = 8
+    Width = 121
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 6
+    Text = 'watermark'
+  end
 end

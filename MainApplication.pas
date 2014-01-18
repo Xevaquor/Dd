@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, TOperativeUnit, ComCtrls, StdCtrls, DateUtils, FormAdd, FormEdit,
-  System.RegularExpressions, Vcl.ExtCtrls, Image17;
+  System.RegularExpressions, Vcl.ExtCtrls, TWatermarkEditUnit;
 
 procedure Append(item: TElemType);
 stdcall external 'LinkedList.dll' name 'Append';
@@ -36,6 +36,7 @@ type
     tbSearchLastName: TEdit;
     Label1: TLabel;
     Label2: TLabel;
+    WatermarkEdit1: TWatermarkEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnAddOperativeClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
